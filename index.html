@@ -3,274 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabrina Juice - Segar & Alami</title>
+    <title>Sabrina Juice — Segar & Alami</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">Sabrina Juice</div>
-        <ul>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="logo">Sabrina<em>Juice</em></a>
+        <ul class="nav-links">
             <li><a href="#home">Beranda</a></li>
-            <li><a href="#produk">Varian Rasa</a></li>
-            <li><a href="#kontak">Pesan</a></li>
+            <li><a href="#produk">Menu</a></li>
+            <li><a href="#kontak">Kontak</a></li>
         </ul>
+        <button class="cart-btn" id="cart-btn" onclick="bukaKeranjang()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Keranjang
+            <span class="cart-badge" id="cart-badge">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Buka menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#home" onclick="tutupMobileMenu()">Beranda</a>
+        <a href="#produk" onclick="tutupMobileMenu()">Menu</a>
+        <a href="#kontak" onclick="tutupMobileMenu()">Kontak</a>
+        <button class="btn-wa-mobile" onclick="bukaKeranjang(); tutupMobileMenu()">🛒 Lihat Keranjang</button>
+    </div>
+
+    <!-- HERO -->
     <section id="home" class="hero">
-        <div class="hero-teks">
-            <h1>Kesegaran Buah Asli Untuk Semua Kalangan Usia</h1>
-            <p>Tanpa pengawet, dan gula asli. Minuman menyehatkan untuk semua orang</p>
-            <a href="#produk" class="tombol-pesan">Lihat Menu</a>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                100% Alami &middot; Tanpa Pengawet
+            </div>
+            <h1>Segar dari<br><em>Buah Asli</em></h1>
+            <p>Minuman sehat penuh cita rasa alami.<br>Untuk semua kalangan, setiap saat.</p>
+            <a href="#produk" class="btn-utama">
+                Lihat Menu
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,40 C360,100 1080,0 1440,60 L1440,100 L0,100 Z" fill="#fffaf5"/>
+            </svg>
         </div>
     </section>
 
-    <section id="produk" class="produk-area">
-        <h2>Varian Rasa Sabrina Juice</h2>
-
-        <div class="daftar-produk">
-            
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=1000');">
-                <h3>Es Teh</h3>
-                <p>Teh manis dingin yang menyegarkan dahaga.</p>
-                <span class="harga">Rp3.000</span>
-                <button class="tombol-beli" onclick="tambah('Es Teh', 3000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Es Teh', 3000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1000');">
-                <h3>Teh Hangat</h3>
-                <p>Teh manis hangat yang menenangkan.</p>
-                <span class="harga">Rp3.000</span>
-                <button class="tombol-beli" onclick="tambah('Teh Hangat', 3000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Teh Hangat', 3000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://cdn0-production-images-kly.akamaized.net/la8Yi0kckjoREOqZrlxygtZK_tg=/1x60:1000x623/469x260/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4613321/original/069003600_1697516254-shutterstock_2358173763.jpg');">
-                <h3>Milk Tea</h3>
-                <p>Varian teh susu yang creamy dan manis.</p>
-                <span class="harga">Rp5.000</span>
-                <button class="tombol-beli" onclick="tambah('Milk Tea', 5000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Milk Tea', 5000)">- Batal</button>
-            </div>
-            
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?q=80&w=1000');">
-                <h3>Es Jeruk Peras</h3>
-                <p>Jeruk peras asli dengan es batu segar.</p>
-                <span class="harga">Rp5.000</span>
-                <button class="tombol-beli" onclick="tambah('Es Jeruk Peras', 5000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Es Jeruk Peras', 5000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=1000');">
-                <h3>Jeruk Peras Hangat</h3>
-                <p>Jeruk peras hangat kaya vitamin C.</p>
-                <span class="harga">Rp5.000</span>
-                <button class="tombol-beli" onclick="tambah('Jeruk Peras Hangat', 5000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jeruk Peras Hangat', 5000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80&w=1000');">
-                <h3>Jus Jeruk</h3>
-                <p>Minuman jus dari jeruk pilihan yang lembut.</p>
-                <span class="harga">Rp6.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Jeruk', 6000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Jeruk', 6000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://linesnews.co.id/wp-content/uploads/2025/12/mzv08kmuqs2dufi80iweywp6mwu689kx.jpg');">
-                <h3>Jus Jambu Merah</h3>
-                <p>Baik untuk trombosit dan pencernaan.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Jambu Merah', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Jambu Merah', 7000)">- Batal</button>
-            </div>
-        
-            <div class="kartu-produk" style="background-image: url('https://www.alodokter.com/wp-content/uploads/2024/07/manfaat-jus-jambu.jpg');">
-                <h3>Jus Jambu Merah + Susu</h3>
-                <p>Lebih lezat dan creamy dengan tambahan susu.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Jambu Merah + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Jambu Merah + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1601039641847-7857b994d704?q=80&w=1000');">
-                <h3>Jus Alpukat + Susu</h3>
-                <p>Baik untuk kesehatan jantung dan kulit.</p>
-                <span class="harga">Rp10.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Alpukat + Susu', 10000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Alpukat + Susu', 10000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?q=80&w=1000');">
-                <h3>Jus Mangga</h3>
-                <p>Baik untuk mata dan sistem imun tubuh.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Mangga', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Mangga', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1546173159-315724a31696?q=80&w=1000');">
-                <h3>Jus Mangga + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Mangga + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Mangga + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?q=80&w=1000');">
-                <h3>Jus Semangka</h3>
-                <p>Kaya akan air dan vitamin A.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Semangka', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Semangka', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://assets.radarcirebon.id/main/2023/08/jus-semangka-sehat.jpg');">
-                <h3>Jus Semangka + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Semangka + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Semangka + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://www.tokomesin.com/wp-content/uploads/2015/10/jus-apel-tokomesin.jpg');">
-                <h3>Jus Apel</h3>
-                <p>Tinggi serat dan vitamin C.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Apel', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Apel', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhF1UgoUSjjcVNzLTqX5SfXhphlY9OMSSz7g&s');">
-                <h3>Jus Apel + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp9.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Apel + Susu', 9000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Apel + Susu', 9000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJotp8ShVynFggzYzg24MxBKl_0qu3PDIdlg&s');">
-                <h3>Jus Belimbing</h3>
-                <p>Kaya akan vitamin C dan serat.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Belimbing', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Belimbing', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://img-global.cpcdn.com/recipes/8f33f3509a58775c/680x781f0.5_0.50125_1.0q80/jus-belimbing-susu-foto-resep-utama.jpg');">
-                <h3>Jus Belimbing + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Belimbing + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Belimbing + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://i0.wp.com/resepkoki.id/wp-content/uploads/2018/04/Resep-Jus-Buah-Naga-Stroberi.jpg?fit=1630%2C1920&ssl=1');">
-                <h3>Jus Buah Naga</h3>
-                <p>Tinggi akan antioksidan dan berbagai vitamin.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Buah Naga', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Buah Naga', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://img-global.cpcdn.com/recipes/845fdcf6fdbc7e9c/680x781cq80/jus-buah-naga-susu-foto-resep-utama.jpg');">
-                <h3>Jus Buah Naga + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Buah Naga + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Buah Naga + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://cdn0-production-images-kly.akamaized.net/MtXEnuN0WErGuk44pKdav_YrzLY=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1168002/original/047769200_1457685356-nanas.jpg');">
-                <h3>Jus Nanas</h3>
-                <p>Buah yang tinggi akan enzim yang baik untuk pencernaan.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Nanas', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Nanas', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6hzZx9jJQomnPC5-lg0g7QoI2roywf2Onhw&s');">
-                <h3>Jus Nanas + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Nanas + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Nanas + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScTeKpl30ERuIgamBKhI6LxVNQKeV0VQ_DgQ&s');">
-                <h3>Jus Tomat</h3>
-                <p>Bagus untuk kesehatan jantung dan kulit.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Tomat', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Tomat', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://cdn.yummy.co.id/content-images/images/20210314/k96v9vP0YxxFKjDXy6RxOtTRdepbAAgQ-31363135363934333534d41d8cd98f00b204e9800998ecf8427e.jpg?x-oss-process=image/resize,w_388,h_388,m_fixed,x-oss-process=image/format,webp');">
-                <h3>Jus Tomat + Susu</h3>
-                <p>Varian susu yang lebih creamy.</p>
-                <span class="harga">Rp8.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Tomat + Susu', 8000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Tomat + Susu', 8000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUntsA2BmsZFoycsw4dk9KR7-vRFT35FEUtA&s');">
-                <h3>Jus Wortel</h3>
-                <p>Bagus untuk kesehatan mata dan sistem imun.</p>
-                <span class="harga">Rp7.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Wortel', 7000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Wortel', 7000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://awsimages.detik.net.id/community/media/visual/2023/07/28/1493448938_169.jpeg?w=1200');">
-                <h3>Jus Mix Tomat + Wortel</h3>
-                <p>Varian Mix Tomat dan Wortel.</p>
-                <span class="harga">Rp9.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Mix Tomat + Wortel', 9000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Mix Tomat + Wortel', 9000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://www.tokomesin.com/wp-content/uploads/2015/10/juice-manis-tokomesin.jpg');">
-                <h3>Jus Mix Apel + Wortel</h3>
-                <p>Varian Mix Apel dan Wortel.</p>
-                <span class="harga">Rp9.000</span>
-                <button class="tombol-beli" onclick="tambah('Jus Mix Apel + Wortel', 9000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Jus Mix Apel + Wortel', 9000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?q=80&w=1000');">
-                <h3>Varian Spesial Sop buah</h3>
-                <p>Sop buah dengan campuran buah-buahan segar, dan susu yang creamy.</p>
-                <span class="harga">Rp10.000</span>
-                <button class="tombol-beli" onclick="tambah('Varian Spesial Sop buah', 10000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Varian Spesial Sop buah', 10000)">- Batal</button>
-            </div>
-
-            <div class="kartu-produk" style="background-image: url('https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1000');">
-                <h3>Varian Spesial Salad buah</h3>
-                <p>Salad buah dengan campuran buah-buahan segar dan menyehatkan.</p>
-                <span class="harga">Rp10.000</span>
-                <button class="tombol-beli" onclick="tambah('Varian Spesial Salad buah', 10000)">+ Keranjang</button>
-                <button class="tombol-batal" onclick="kurang('Varian Spesial Salad buah', 10000)">- Batal</button>
-            </div>
-        </div>
-    </section>
-
-    <footer id="kontak" class="footer">
-        <p>Pesan sekarang juga melalui WhatsApp: <a href="https://wa.me/6281232576813">+62 812 3257 6813</a></p>
-        <p>&copy; 2024 Sabrina Juice. All rights reserved.</p>
-    </footer>
-
-    <div id="keranjang-layang" class="keranjang-container" style="display: none;">
-        <div class="info-belanja">
-            <span id="teks-total">0 Item | Rp 0</span>
-        </div>
-        <div class="tombol-area">
-            <button class="tombol-reset" onclick="batalSemua()">Kosongkan</button>
-            <button class="tombol-checkout" onclick="selesai()">Selesaikan Pesanan</button>
+    <!-- KATEGORI BAR -->
+    <div class="kategori-bar" id="kategori-bar">
+        <div class="kategori-inner">
+            <button class="tab-btn active" data-kategori="semua" onclick="filterKategori('semua')">Semua</button>
+            <button class="tab-btn" data-kategori="teh" onclick="filterKategori('teh')">🍵 Teh</button>
+            <button class="tab-btn" data-kategori="jeruk" onclick="filterKategori('jeruk')">🍊 Jeruk</button>
+            <button class="tab-btn" data-kategori="jus" onclick="filterKategori('jus')">🥤 Jus Buah</button>
+            <button class="tab-btn" data-kategori="susu" onclick="filterKategori('susu')">🥛 + Susu</button>
+            <button class="tab-btn" data-kategori="spesial" onclick="filterKategori('spesial')">⭐ Spesial</button>
         </div>
     </div>
-    
+
+    <!-- PRODUK -->
+    <section id="produk" class="produk-area">
+        <div class="produk-header">
+            <div class="produk-judul">
+                <h2>Menu Kami</h2>
+                <p>Pilih minuman favoritmu</p>
+            </div>
+            <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" id="search-input" placeholder="Cari minuman..." oninput="cariProduk(this.value)">
+            </div>
+        </div>
+        <div class="daftar-produk" id="daftar-produk">
+            <!-- Dirender oleh script.js -->
+        </div>
+        <div class="produk-kosong" id="produk-kosong" style="display:none">
+            <span>🔍</span>
+            <p>Tidak ada minuman ditemukan.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="kontak" class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">Sabrina<em>Juice</em></div>
+                <p>Minuman segar dari buah asli pilihan,<br>tanpa pengawet, untuk gaya hidup sehat.</p>
+                <a href="https://wa.me/6281232576813" class="btn-wa" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Pesan via WhatsApp
+                </a>
+            </div>
+            <div class="footer-info">
+                <h4>Jam Operasional</h4>
+                <p>Senin – Sabtu &nbsp;08.00 – 20.00</p>
+                <p>Minggu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08.00 – 17.00</p>
+                <h4>Kontak Kami</h4>
+                <p>+62 812 3257 6813</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Sabrina Juice &mdash; Dibuat dengan 🍃 untuk kesehatan Anda.</p>
+        </div>
+    </footer>
+
+    <!-- CART OVERLAY -->
+    <div class="cart-overlay" id="cart-overlay" onclick="tutupKeranjang()"></div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Keranjang Belanja</h3>
+            <button class="btn-close" onclick="tutupKeranjang()" aria-label="Tutup">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="keranjang-list" id="keranjang-list">
+            <div class="keranjang-kosong">
+                <div class="kosong-icon">🧃</div>
+                <p>Keranjangmu masih kosong</p>
+                <small>Yuk pilih minuman favoritmu!</small>
+            </div>
+        </div>
+        <div class="keranjang-footer" id="keranjang-footer" style="display:none">
+            <div class="keranjang-total" id="keranjang-total"></div>
+            <div class="keranjang-actions">
+                <button class="btn-kosong" onclick="batalSemua()">Kosongkan</button>
+                <button class="btn-checkout" onclick="selesai()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+                    Pesan via WA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
