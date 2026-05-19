@@ -1,41 +1,21 @@
 /* ============================
    DATA PRODUK
    ============================ */
-const produkList = [
-    // TEH
-    { id: 'es-teh',           nama: 'Es Teh',               harga: 3000,  kategori: 'teh',     gambar: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=600',   deskripsi: 'Teh manis dingin yang menyegarkan dahaga.',        label: null },
-    { id: 'teh-hangat',       nama: 'Teh Hangat',           harga: 3000,  kategori: 'teh',     gambar: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600', deskripsi: 'Teh manis hangat yang menenangkan jiwa.',          label: null },
-    { id: 'milk-tea',         nama: 'Milk Tea',             harga: 5000,  kategori: 'teh',     gambar: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=600',   deskripsi: 'Teh susu creamy dan manis, cocok kapan saja.',     label: 'Favorit' },
-    // JERUK
-    { id: 'es-jeruk',         nama: 'Es Jeruk Peras',       harga: 5000,  kategori: 'jeruk',   gambar: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?q=80&w=600', deskripsi: 'Jeruk peras asli dengan es batu segar.',           label: null },
-    { id: 'jeruk-hangat',     nama: 'Jeruk Peras Hangat',   harga: 5000,  kategori: 'jeruk',   gambar: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=600', deskripsi: 'Jeruk peras hangat, kaya vitamin C alami.',        label: null },
-    { id: 'jus-jeruk',        nama: 'Jus Jeruk',            harga: 6000,  kategori: 'jeruk',   gambar: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80&w=600', deskripsi: 'Minuman jus dari jeruk pilihan yang lembut.',       label: null },
-    // JUS MURNI
-    { id: 'jus-jambu',        nama: 'Jus Jambu Merah',      harga: 7000,  kategori: 'jus',     gambar: 'https://linesnews.co.id/wp-content/uploads/2025/12/mzv08kmuqs2dufi80iweywp6mwu689kx.jpg',  deskripsi: 'Baik untuk trombosit dan pencernaan.',  label: null },
-    { id: 'jus-mangga',       nama: 'Jus Mangga',           harga: 7000,  kategori: 'jus',     gambar: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?q=80&w=600', deskripsi: 'Baik untuk mata dan sistem imun tubuh.',           label: null },
-    { id: 'jus-semangka',     nama: 'Jus Semangka',         harga: 7000,  kategori: 'jus',     gambar: 'https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?q=80&w=600', deskripsi: 'Kaya akan air dan vitamin A alami.',               label: null },
-    { id: 'jus-apel',         nama: 'Jus Apel',             harga: 8000,  kategori: 'jus',     gambar: 'https://www.tokomesin.com/wp-content/uploads/2015/10/jus-apel-tokomesin.jpg', deskripsi: 'Tinggi serat dan vitamin C.',                  label: null },
-    { id: 'jus-belimbing',    nama: 'Jus Belimbing',        harga: 7000,  kategori: 'jus',     gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJotp8ShVynFggzYzg24MxBKl_0qu3PDIdlg&s', deskripsi: 'Kaya akan vitamin C dan serat.',  label: null },
-    { id: 'jus-buahnaga',     nama: 'Jus Buah Naga',        harga: 7000,  kategori: 'jus',     gambar: 'https://i0.wp.com/resepkoki.id/wp-content/uploads/2018/04/Resep-Jus-Buah-Naga-Stroberi.jpg?fit=1630%2C1920&ssl=1', deskripsi: 'Tinggi antioksidan dan vitamin.',  label: null },
-    { id: 'jus-nanas',        nama: 'Jus Nanas',            harga: 7000,  kategori: 'jus',     gambar: 'https://cdn0-production-images-kly.akamaized.net/MtXEnuN0WErGuk44pKdav_YrzLY=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1168002/original/047769200_1457685356-nanas.jpg', deskripsi: 'Enzim pencernaan alami dari nanas segar.', label: null },
-    { id: 'jus-tomat',        nama: 'Jus Tomat',            harga: 7000,  kategori: 'jus',     gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScTeKpl30ERuIgamBKhI6LxVNQKeV0VQ_DgQ&s', deskripsi: 'Bagus untuk kesehatan jantung dan kulit.',  label: null },
-    { id: 'jus-wortel',       nama: 'Jus Wortel',           harga: 7000,  kategori: 'jus',     gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUntsA2BmsZFoycsw4dk9KR7-vRFT35FEUtA&s', deskripsi: 'Bagus untuk kesehatan mata dan imun.',     label: null },
-    // + SUSU
-    { id: 'jus-jambu-susu',   nama: 'Jus Jambu + Susu',     harga: 8000,  kategori: 'susu',    gambar: 'https://www.alodokter.com/wp-content/uploads/2024/07/manfaat-jus-jambu.jpg', deskripsi: 'Lebih lezat dan creamy dengan tambahan susu.',  label: null },
-    { id: 'jus-alpukat',      nama: 'Jus Alpukat + Susu',   harga: 10000, kategori: 'susu',    gambar: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?q=80&w=600',   deskripsi: 'Baik untuk kesehatan jantung dan kulit.',        label: 'Terlaris' },
-    { id: 'jus-mangga-susu',  nama: 'Jus Mangga + Susu',    harga: 8000,  kategori: 'susu',    gambar: 'https://images.unsplash.com/photo-1546173159-315724a31696?q=80&w=600',       deskripsi: 'Creamy, manis, dan penuh nutrisi.',              label: null },
-    { id: 'jus-semangka-susu',nama: 'Jus Semangka + Susu',  harga: 8000,  kategori: 'susu',    gambar: 'https://assets.radarcirebon.id/main/2023/08/jus-semangka-sehat.jpg',           deskripsi: 'Segar dan creamy, paduan sempurna.',             label: null },
-    { id: 'jus-apel-susu',    nama: 'Jus Apel + Susu',      harga: 9000,  kategori: 'susu',    gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhF1UgoUSjjcVNzLTqX5SfXhphlY9OMSSz7g&s', deskripsi: 'Manis dan creamy dari paduan apel dan susu.', label: null },
-    { id: 'jus-belimbing-susu',nama:'Jus Belimbing + Susu', harga: 8000,  kategori: 'susu',    gambar: 'https://img-global.cpcdn.com/recipes/8f33f3509a58775c/680x781f0.5_0.50125_1.0q80/jus-belimbing-susu-foto-resep-utama.jpg', deskripsi: 'Varian susu yang lebih creamy dan lezat.', label: null },
-    { id: 'jus-buahnaga-susu',nama: 'Jus Buah Naga + Susu', harga: 8000,  kategori: 'susu',    gambar: 'https://img-global.cpcdn.com/recipes/845fdcf6fdbc7e9c/680x781cq80/jus-buah-naga-susu-foto-resep-utama.jpg', deskripsi: 'Antioksidan tinggi dengan tambahan susu.', label: null },
-    { id: 'jus-nanas-susu',   nama: 'Jus Nanas + Susu',     harga: 8000,  kategori: 'susu',    gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6hzZx9jJQomnPC5-lg0g7QoI2roywf2Onhw&s', deskripsi: 'Perpaduan nanas segar dan susu creamy.', label: null },
-    { id: 'jus-tomat-susu',   nama: 'Jus Tomat + Susu',     harga: 8000,  kategori: 'susu',    gambar: 'https://cdn.yummy.co.id/content-images/images/20210314/k96v9vP0YxxFKjDXy6RxOtTRdepbAAgQ-31363135363934333534d41d8cd98f00b204e9800998ecf8427e.jpg', deskripsi: 'Nutrisi tomat dengan kelezatan susu.', label: null },
-    // SPESIAL / MIX
-    { id: 'mix-tomat-wortel', nama: 'Mix Tomat + Wortel',   harga: 9000,  kategori: 'spesial', gambar: 'https://awsimages.detik.net.id/community/media/visual/2023/07/28/1493448938_169.jpeg?w=1200', deskripsi: 'Paduan tomat dan wortel penuh vitamin.', label: 'Mix' },
-    { id: 'mix-apel-wortel',  nama: 'Mix Apel + Wortel',    harga: 9000,  kategori: 'spesial', gambar: 'https://www.tokomesin.com/wp-content/uploads/2015/10/juice-manis-tokomesin.jpg', deskripsi: 'Varian mix apel dan wortel yang menyehatkan.', label: 'Mix' },
-    { id: 'sop-buah',         nama: 'Sop Buah Spesial',     harga: 10000, kategori: 'spesial', gambar: 'https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?q=80&w=600',   deskripsi: 'Buah-buahan segar dicampur susu yang creamy.',   label: 'Spesial' },
-    { id: 'salad-buah',       nama: 'Salad Buah Spesial',   harga: 10000, kategori: 'spesial', gambar: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=600',   deskripsi: 'Salad buah segar, menyehatkan, dan mengenyangkan.', label: 'Spesial' },
-];
+let produkList = [];
+
+async function fetchProduk() {
+    try {
+        const response = await fetch('https://sabrinajuice.gt.tc/api/produk.php');
+        if (!response.ok) throw new Error('Jaringan bermasalah');
+        
+        const data = await response.json();
+        produkList = data; // Memasukkan data dari database
+        renderProduk();    // Tampilkan produk ke layar
+    } catch (error) {
+        console.error('Gagal mengambil data:', error);
+        document.getElementById('daftar-produk').innerHTML = '<p style="text-align:center; width:100%;">Gagal memuat menu. Coba muat ulang halaman.</p>';
+    }
+}
 
 
 /* ============================
@@ -58,7 +38,7 @@ function renderProduk() {
              style="animation-delay: ${i * 0.04}s">
             ${p.label ? `<div class="label-produk">${p.label}</div>` : ''}
             <div class="kartu-gambar">
-                <img src="${p.gambar}"
+                <img src="${p.gambar_url}"
                      alt="${p.nama}"
                      loading="lazy"
                      onerror="this.src='https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=400'">
@@ -260,21 +240,59 @@ function tampilkanProduk(kategori, query) {
 
 
 /* ============================
-   CHECKOUT
+   CHECKOUT (SIMPAN KE DB & WA)
    ============================ */
-function selesai() {
+async function selesai() {
     const total = getTotalItem();
     if (total === 0) return;
 
     const daftar = Object.values(keranjang)
         .map(item => `• ${item.nama} ×${item.qty} = Rp ${(item.harga * item.qty).toLocaleString('id-ID')}`)
         .join('\n');
-
     const harga = getTotalHarga();
     const pesan = `Halo Sabrina Juice! 🍹\n\nSaya mau pesan:\n${daftar}\n\n*Total: Rp ${harga.toLocaleString('id-ID')}*\n\nTerima kasih! 🙏`;
     const nomor = '6281232576813';
 
-    window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`, '_blank');
+    const orderItems = Object.keys(keranjang).map(id => ({
+        produk_id: id,
+        nama_produk: keranjang[id].nama,
+        harga: keranjang[id].harga,
+        jumlah: keranjang[id].qty
+    }));
+
+    const payload = {
+        nama_pembeli: "Pelanggan Web",
+        nomor_wa: nomor,
+        total_harga: harga,
+        items: orderItems
+    };
+
+    try {
+        const btnCheckout = document.querySelector('.btn-checkout');
+        const originalText = btnCheckout.innerHTML;
+        btnCheckout.innerHTML = 'Memproses...';
+        btnCheckout.disabled = true;
+
+        const response = await fetch('https://sabrinajuice.gt.tc/api/pesanan.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error('Gagal menyimpan pesanan');
+
+        window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`, '_blank');
+        
+        batalSemua();
+
+    } catch (error) {
+        console.error('Error checkout:', error);
+        alert('Maaf, terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
+    } finally {
+        const btnCheckout = document.querySelector('.btn-checkout');
+        btnCheckout.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Pesan via WA`;
+        btnCheckout.disabled = false;
+    }
 }
 
 
@@ -330,5 +348,5 @@ window.addEventListener('scroll', () => {
    INIT
    ============================ */
 document.addEventListener('DOMContentLoaded', () => {
-    renderProduk();
+    fetchProduk();
 });
