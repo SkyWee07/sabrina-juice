@@ -5,7 +5,7 @@ let produkList = [];
 
 async function fetchProduk() {
     try {
-        const response = await fetch('http://localhost/sabrina-juice/api/produk.php');
+        const response = await fetch('https://sabrina-juice.atwebpages.com/sabrina-juice/api/produk.php');
         if (!response.ok) throw new Error('Jaringan bermasalah');
 
         const data = await response.json();
@@ -274,7 +274,7 @@ async function selesai() {
         btnCheckout.innerHTML = 'Memproses...';
         btnCheckout.disabled  = true;
 
-        const response = await fetch('http://localhost/sabrina-juice/api/pesanan.php', {
+        const response = await fetch('https://sabrina-juice.atwebpages.com/sabrina-juice/api/pesanan.php', {
             method : 'POST',
             headers: { 'Content-Type': 'application/json' },
             body   : JSON.stringify(payload)
