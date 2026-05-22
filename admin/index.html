@@ -7,390 +7,405 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8fafc;
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="text-slate-800 antialiased">
 
-    <div class="flex min-h-screen">
-        
-        <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col justify-between p-4 shrink-0">
-            <div>
-                <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6">
-                    <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                        <i class="fas fa-glass-water"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-white text-base leading-tight">Sabrina Juice</h1>
-                        <span class="text-xs text-slate-400">Panel Admin v1.0</span>
-                    </div>
-                </div>
+<div class="flex min-h-screen">
 
-                <nav class="space-y-1">
-                    <button onclick="switchTab('dashboard-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-amber-500 text-white font-medium transition-all text-left">
-                        <i class="fas fa-chart-pie w-5 text-center"></i>
-                        <span>Dashboard</span>
-                    </button>
-                    <button onclick="switchTab('produk-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
-                        <i class="fas fa-blender w-5 text-center"></i>
-                        <span>Kelola Menu Jus</span>
-                    </button>
-                    <button onclick="switchTab('stok-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
-                        <i class="fas fa-boxes-stacked w-5 text-center"></i>
-                        <span>Stok Bahan Baku</span>
-                    </button>
-                    <button onclick="switchTab('pesanan-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
-                        <i class="fas fa-shopping-cart w-5 text-center"></i>
-                        <span>Antrean Pesanan</span>
-                    </button>
-                </nav>
+    <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col justify-between p-4 shrink-0">
+        <div>
+            <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6">
+                <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    <i class="fas fa-glass-water"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-white text-base leading-tight">Sabrina Juice</h1>
+                    <span class="text-xs text-slate-400">Panel Admin v1.0</span>
+                </div>
             </div>
-
-            <div class="pt-4 border-t border-slate-800 flex items-center gap-3 px-2">
-                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-200 font-semibold border border-slate-600">
-                    AD
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h4 class="text-sm font-medium text-white truncate">Administrator</h4>
-                    <span class="text-xs text-emerald-400 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> Online
-                    </span>
-                </div>
-                <button onclick="logout()" title="Logout"
-                    class="text-slate-500 hover:text-rose-400 transition-colors text-sm ml-auto">
-                    <i class="fas fa-right-from-bracket"></i>
+            <nav class="space-y-1">
+                <button onclick="switchTab('dashboard-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-amber-500 text-white font-medium transition-all text-left">
+                    <i class="fas fa-chart-pie w-5 text-center"></i><span>Dashboard</span>
                 </button>
+                <button onclick="switchTab('produk-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
+                    <i class="fas fa-blender w-5 text-center"></i><span>Kelola Menu Jus</span>
+                </button>
+                <button onclick="switchTab('stok-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
+                    <i class="fas fa-boxes-stacked w-5 text-center"></i><span>Stok Bahan Baku</span>
+                </button>
+                <button onclick="switchTab('pesanan-view', this)" class="menu-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all text-left">
+                    <i class="fas fa-shopping-cart w-5 text-center"></i><span>Antrean Pesanan</span>
+                </button>
+            </nav>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center gap-3 px-2">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-200 font-semibold border border-slate-600">AD</div>
+            <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-medium text-white truncate">Administrator</h4>
+                <span class="text-xs text-emerald-400 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> Online
+                </span>
             </div>
-        </aside>
+            <button onclick="logout()" title="Logout" class="text-slate-500 hover:text-rose-400 transition-colors text-sm ml-auto">
+                <i class="fas fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
 
-        <main class="flex-1 p-6 overflow-y-auto">
-            
-            <div id="dashboard-view" class="tab-content block">
-                <header class="border-b border-slate-200 pb-5 mb-6">
-                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Ringkasan Operasional</h2>
-                    <p class="text-sm text-slate-500">Pantau performa penjualan harian dan kondisi gerai Sabrina Juice.</p>
-                </header>
+    <main class="flex-1 p-6 overflow-y-auto">
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <!-- DASHBOARD -->
+        <div id="dashboard-view" class="tab-content block">
+            <header class="border-b border-slate-200 pb-5 mb-6">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Ringkasan Operasional</h2>
+                <p class="text-sm text-slate-500">Pantau performa penjualan harian dan kondisi gerai Sabrina Juice.</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div><span class="text-xs font-semibold text-slate-400 uppercase">Total Pendapatan</span><h3 class="text-xl font-bold text-slate-900 mt-1">Rp.0</h3></div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fas fa-wallet"></i></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div><span class="text-xs font-semibold text-slate-400 uppercase">Cup Terjual</span><h3 class="text-xl font-bold text-slate-900 mt-1">0 Porsi</h3></div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fas fa-wine-glass-alt"></i></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div><span class="text-xs font-semibold text-slate-400 uppercase">Bahan Kritis</span><h3 class="text-xl font-bold text-rose-600 mt-1">0 Buah</h3></div>
+                    <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fas fa-triangle-exclamation"></i></div>
+                </div>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+                <i class="fas fa-circle-info text-amber-600 mt-0.5"></i>
+                <div><h4 class="text-sm font-semibold text-amber-900">Pemberitahuan Sistem</h4><p class="text-xs text-amber-700 mt-0.5">tidak ada.</p></div>
+            </div>
+        </div>
+
+        <!-- PRODUK -->
+        <div id="produk-view" class="tab-content hidden">
+            <header class="border-b border-slate-200 pb-5 mb-6">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Kelola Katalog Menu</h2>
+                <p class="text-sm text-slate-500">Tambah menu baru, edit harga, atau hapus varian jus yang tersedia untuk user.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- FORM TAMBAH — sudah terhubung ke API -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-fit">
+                    <h3 class="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
+                        <i class="fas fa-plus-circle text-amber-500"></i> Tambah Menu Baru
+                    </h3>
+                    <form id="form-tambah-produk" onsubmit="submitTambahProduk(event)" class="space-y-4">
                         <div>
-                            <span class="text-xs font-semibold text-slate-400 uppercase">Total Pendapatan</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-1">Rp.0</h3>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Minuman *</label>
+                            <input type="text" id="input-nama" placeholder="Contoh: Es Jeruk Peras" required
+                                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
-                            <i class="fas fa-wallet"></i>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Harga (Rp) *</label>
+                                <input type="number" id="input-harga" placeholder="15000" min="1" required
+                                    class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Stok</label>
+                                <input type="number" id="input-stok" placeholder="0" min="0" value="0"
+                                    class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                            </div>
                         </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-semibold text-slate-400 uppercase">Cup Terjual</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-1">0 Porsi</h3>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori *</label>
+                            <select id="input-kategori" required
+                                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                                <option value="">-- Pilih --</option>
+                                <option value="teh">🍵 Teh</option>
+                                <option value="jeruk">🍊 Jeruk</option>
+                                <option value="jus_buah">🥤 Jus Buah</option>
+                                <option value="susu">🥛 + Susu</option>
+                                <option value="spesial">⭐ Spesial</option>
+                            </select>
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
-                            <i class="fas fa-wine-glass-alt"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-semibold text-slate-400 uppercase">Bahan Kritis</span>
-                            <h3 class="text-xl font-bold text-rose-600 mt-1">0 Buah</h3>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">URL Gambar</label>
+                            <input type="url" id="input-gambar" placeholder="https://..."
+                                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                            <div id="preview-gambar" class="mt-2 hidden">
+                                <img id="img-preview" src="" alt="Preview" class="h-20 w-20 object-cover rounded-lg border border-slate-200">
+                            </div>
                         </div>
-                        <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
-                            <i class="fas fa-triangle-exclamation"></i>
+                        <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
+                            <span class="text-xs font-semibold text-slate-500 uppercase">Langsung Tersedia?</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="input-tersedia" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-300 peer-checked:bg-amber-500 rounded-full transition peer-focus:ring-2 peer-focus:ring-amber-300"></div>
+                                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition peer-checked:translate-x-5"></div>
+                            </label>
                         </div>
+                        <div id="form-error" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2"></div>
+                        <button type="submit" id="btn-submit-tambah"
+                            class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2">
+                            <span id="btn-submit-text"><i class="fas fa-save mr-1"></i> Simpan ke User View</span>
+                            <svg id="btn-submit-spinner" class="hidden animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"/>
+                                <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v8z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- TABEL PRODUK -->
+                <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 text-base mb-4"><i class="fas fa-list text-slate-400 mr-1"></i> Menu Aktif di Halaman Pembeli</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-400 text-[11px] font-semibold uppercase border-b border-slate-100">
+                                    <th class="py-2.5 px-3">Produk</th>
+                                    <th class="py-2.5 px-3">Kategori</th>
+                                    <th class="py-2.5 px-3">Harga</th>
+                                    <th class="py-2.5 px-3">Status</th>
+                                    <th class="py-2.5 px-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-produk" class="divide-y divide-slate-100">
+                                <tr id="produk-loading-row">
+                                    <td colspan="5" class="py-6 text-center text-sm text-slate-400">
+                                        <i class="fas fa-spinner fa-spin mr-2"></i> Memuat data produk...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
-                    <i class="fas fa-circle-info text-amber-600 mt-0.5"></i>
+            </div>
+        </div>
+
+        <!-- STOK -->
+        <div id="stok-view" class="tab-content hidden">
+            <header class="border-b border-slate-200 pb-5 mb-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Gudang & Inventaris Bahan Baku</h2>
+                    <p class="text-sm text-slate-500">Pantau ketersediaan kiloan buah, persediaan sirup, gula, dan cup gelas.</p>
+                </div>
+                <button class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Tambah Kulakan (Restock)
+                </button>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
                     <div>
-                        <h4 class="text-sm font-semibold text-amber-900">Pemberitahuan Sistem</h4>
-                        <p class="text-xs text-amber-700 mt-0.5">tidak ada.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="produk-view" class="tab-content hidden">
-                <header class="border-b border-slate-200 pb-5 mb-6">
-                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Kelola Katalog Menu</h2>
-                    <p class="text-sm text-slate-500">Tambah menu baru, edit harga, atau hapus varian jus yang tersedia untuk user.</p>
-                </header>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-fit">
-                        <h3 class="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
-                            <i class="fas fa-plus-circle text-amber-500"></i> Tambah Menu Baru
-                        </h3>
-                        <form class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Minuman</label>
-                                <input type="text" placeholder="Contoh: Es Jeruk Peras" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Harga (Rp)</label>
-                                    <input type="number" placeholder="15000" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori</label>
-                                    <select class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
-                                        <option value="teh">🍵 Teh</option>
-                                        <option value="jeruk">🍊 Jeruk</option>
-                                        <option value="jus_buah">🥤 Jus Buah</option>
-                                        <option value="susu">🥛 + Susu</option>
-                                        <option value="spesial">⭐ Spesial</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Deskripsi</label>
-                                <textarea rows="2" placeholder="Komposisi bahan minuman..." class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500"></textarea>
-                            </div>
-                            <button type="button" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm rounded-xl transition-colors">
-                                <i class="fas fa-save mr-1"></i> Simpan ke User View
-                            </button>
-                        </form>
-                    </div>
-
-                    <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="font-bold text-slate-900 text-base mb-4"><i class="fas fa-list text-slate-400 mr-1"></i> Menu Aktif di Halaman Pembeli</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm whitespace-nowrap">
-                                <thead>
-                                    <tr class="bg-slate-50 text-slate-400 text-[11px] font-semibold uppercase border-b border-slate-100">
-                                        <th class="py-2.5 px-3">Produk</th>
-                                        <th class="py-2.5 px-3">Kategori</th>
-                                        <th class="py-2.5 px-3">Harga</th>
-                                        <th class="py-2.5 px-3">Status</th>
-                                        <th class="py-2.5 px-3 text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-produk" class="divide-y divide-slate-100">
-                                    <tr id="produk-loading-row">
-                                        <td colspan="5" class="py-6 text-center text-sm text-slate-400">
-                                            <i class="fas fa-spinner fa-spin mr-2"></i> Memuat data produk...
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900 text-sm">Alpukat Mentega</span>
+                            <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
                         </div>
+                        <div class="text-3xl font-black text-slate-900 my-2">14.5 <span class="text-sm font-normal text-slate-400">Kg</span></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-emerald-500 h-full" style="width:72%"></div></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span>Estimasi ~48 Cup</span>
+                        <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
                     </div>
                 </div>
-            </div>
-
-            <div id="stok-view" class="tab-content hidden">
-                <header class="border-b border-slate-200 pb-5 mb-6 flex justify-between items-center">
+                <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Gudang & Inventaris Bahan Baku</h2>
-                        <p class="text-sm text-slate-500">Pantau ketersediaan kiloan buah, persediaan sirup, gula, dan cup gelas.</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900 text-sm">Mangga Arumanis</span>
+                            <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
+                        </div>
+                        <div class="text-3xl font-black text-slate-900 my-2">22.0 <span class="text-sm font-normal text-slate-400">Kg</span></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-emerald-500 h-full" style="width:88%"></div></div>
                     </div>
-                    <button class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl flex items-center gap-2">
-                        <i class="fas fa-plus"></i> Tambah Kulakan (Restock)
-                    </button>
-                </header>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-bold text-slate-900 text-sm">Alpukat Mentega</span>
-                                <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
-                            </div>
-                            <div class="text-3xl font-black text-slate-900 my-2">14.5 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
-                                <div class="bg-emerald-500 h-full" style="width: 72%"></div>
-                            </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span>Estimasi ~80 Cup</span>
+                        <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
+                    </div>
+                </div>
+                <div class="p-5 border border-rose-200 bg-rose-50/20 rounded-2xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900 text-sm">Stroberi Fresh</span>
+                            <span class="text-[10px] font-semibold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">Kritis</span>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                            <span>Estimasi ~48 Cup</span>
-                            <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
+                        <div class="text-3xl font-black text-rose-600 my-2">1.2 <span class="text-sm font-normal text-slate-400">Kg</span></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-rose-500 h-full" style="width:12%"></div></div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-rose-200 flex items-center justify-between text-xs">
+                        <span class="text-rose-600 font-medium">Hanya untuk ~4 Cup</span>
+                        <button class="text-amber-600 font-bold hover:underline"><i class="fas fa-shopping-basket"></i> Belanja</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESANAN -->
+        <div id="pesanan-view" class="tab-content hidden">
+            <header class="border-b border-slate-200 pb-5 mb-6">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Antrean Pesanan Masuk</h2>
+                <p class="text-sm text-slate-500">Daftar pesanan dari pembeli di frontend. Klik selesai setelah jus selesai dibuat.</p>
+            </header>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-500 uppercase">Daftar Antrean Aktif</span>
+                    <span class="px-2 py-0.5 text-xs bg-amber-100 text-amber-800 rounded font-medium">2 Pesanan Menunggu</span>
+                </div>
+                <div class="divide-y divide-slate-100">
+                    <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div>
+                            <span class="text-xs font-mono text-slate-400">#ORD-0943</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Rian (Meja 04)</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">1x Alpukat Kocok Premium <span class="text-slate-400">(Less Sugar, Extra Coklat)</span></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-500 mr-2"><i class="far fa-clock"></i> 3 menit lalu</span>
+                            <button class="px-3 py-1.5 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-sm">Selesai Buat</button>
                         </div>
                     </div>
-
-                    <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
+                    <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                         <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-bold text-slate-900 text-sm">Mangga Arumanis</span>
-                                <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
-                            </div>
-                            <div class="text-3xl font-black text-slate-900 my-2">22.0 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
-                                <div class="bg-emerald-500 h-full" style="width: 88%"></div>
-                            </div>
+                            <span class="text-xs font-mono text-slate-400">#ORD-0942</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Siti Nurhaliza (Take Away)</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">2x Mango Smoothies Original <span class="text-slate-400">(Normal Ice)</span></p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                            <span>Estimasi ~80 Cup</span>
-                            <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
-                        </div>
-                    </div>
-
-                    <div class="p-5 border border-rose-200 bg-rose-50/20 rounded-2xl shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-bold text-slate-900 text-sm">Stroberi Fresh</span>
-                                <span class="text-[10px] font-semibold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">Kritis</span>
-                            </div>
-                            <div class="text-3xl font-black text-rose-600 my-2">1.2 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
-                                <div class="bg-rose-500 h-full" style="width: 12%"></div>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-rose-200 flex items-center justify-between text-xs">
-                            <span class="text-rose-600 font-medium">Hanya untuk ~4 Cup</span>
-                            <button class="text-amber-600 font-bold hover:underline"><i class="fas fa-shopping-basket"></i> Belanja</button>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-500 mr-2"><i class="far fa-clock"></i> 7 menit lalu</span>
+                            <button class="px-3 py-1.5 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-sm">Selesai Buat</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div id="pesanan-view" class="tab-content hidden">
-                <header class="border-b border-slate-200 pb-5 mb-6">
-                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Antrean Pesanan Masuk</h2>
-                    <p class="text-sm text-slate-500">Daftar pesanan dari pembeli di frontend. Klik selesai setelah jus selesai dibuat.</p>
-                </header>
+    </main>
+</div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-500 uppercase">Daftar Antrean Aktif</span>
-                        <span class="px-2 py-0.5 text-xs bg-amber-100 text-amber-800 rounded font-medium">2 Pesanan Menunggu</span>
-                    </div>
-                    <div class="divide-y divide-slate-100">
-                        <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                            <div>
-                                <span class="text-xs font-mono text-slate-400">#ORD-0943</span>
-                                <h4 class="font-bold text-slate-900 text-sm">Rian (Meja 04)</h4>
-                                <p class="text-xs text-slate-600 mt-0.5">1x Alpukat Kocok Premium <span class="text-slate-400">(Less Sugar, Extra Coklat)</span></p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-slate-500 mr-2"><i class="far fa-clock"></i> 3 menit lalu</span>
-                                <button class="px-3 py-1.5 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-sm">Selesai Buat</button>
-                            </div>
-                        </div>
+<script>
+    const API_BASE = '/api/admin';
 
-                        <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                            <div>
-                                <span class="text-xs font-mono text-slate-400">#ORD-0942</span>
-                                <h4 class="font-bold text-slate-900 text-sm">Siti Nurhaliza (Take Away)</h4>
-                                <p class="text-xs text-slate-600 mt-0.5">2x Mango Smoothies Original <span class="text-slate-400">(Normal Ice)</span></p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-slate-500 mr-2"><i class="far fa-clock"></i> 7 menit lalu</span>
-                                <button class="px-3 py-1.5 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-sm">Selesai Buat</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    if (sessionStorage.getItem('admin_logged_in') !== 'true') {
+        window.location.href = 'login.html';
+    }
 
-        </main>
-    </div>
+    const adminUsername = sessionStorage.getItem('admin_username') || 'Admin';
+    document.querySelector('.w-10.h-10.rounded-full').nextElementSibling.querySelector('h4').textContent = adminUsername;
 
-    <script>
-        const API_BASE = '/api/admin';
+    async function logout() {
+        try { await fetch(`${API_BASE}/logout.php`, { credentials: 'include' }); } catch (_) {}
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+    }
 
-        // Cek session — kalau belum login, tendang ke login.html
-        if (sessionStorage.getItem('admin_logged_in') !== 'true') {
-            window.location.href = 'login.html';
-        }
+    function switchTab(viewId, clickedButton) {
+        document.querySelectorAll('.tab-content').forEach(v => { v.classList.remove('block'); v.classList.add('hidden'); });
+        document.getElementById(viewId).classList.remove('hidden');
+        document.getElementById(viewId).classList.add('block');
+        document.querySelectorAll('.menu-btn').forEach(btn => {
+            btn.classList.remove('bg-amber-500', 'text-white', 'font-medium');
+            btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
+        });
+        clickedButton.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
+        clickedButton.classList.add('bg-amber-500', 'text-white', 'font-medium');
+        if (viewId === 'produk-view') loadProduk();
+    }
 
-        // Tampilkan username di sidebar
-        const adminUsername = sessionStorage.getItem('admin_username') || 'Admin';
-        document.querySelector('.w-10.h-10.rounded-full').nextElementSibling
-            .querySelector('h4').textContent = adminUsername;
+    // ── PRODUK ──────────────────────────────────────────
+    const labelKategori = { teh:'🍵 Teh', jeruk:'🍊 Jeruk', jus_buah:'🥤 Jus Buah', susu:'🥛 + Susu', spesial:'⭐ Spesial' };
 
-        // Fungsi logout
-        async function logout() {
-            try {
-                await fetch(`${API_BASE}/logout.php`, { credentials: 'include' });
-            } catch (_) {}
-            sessionStorage.clear();
-            window.location.href = 'login.html';
-        }
-
-        function switchTab(viewId, clickedButton) {
-            const views = document.querySelectorAll('.tab-content');
-            views.forEach(view => {
-                view.classList.remove('block');
-                view.classList.add('hidden');
-            });
-
-            const activeView = document.getElementById(viewId);
-            activeView.classList.remove('hidden');
-            activeView.classList.add('block');
-
-            const buttons = document.querySelectorAll('.menu-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-amber-500', 'text-white', 'font-medium');
-                btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
-            });
-
-            clickedButton.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
-            clickedButton.classList.add('bg-amber-500', 'text-white', 'font-medium');
-
-            // Panggil loader sesuai tab yang dibuka
-            if (viewId === 'produk-view') loadProduk();
-        }
-
-        // ============ PRODUK ============
-        async function loadProduk() {
-            const tbody = document.getElementById('tbody-produk');
-
-            try {
-                const res = await fetch(`${API_BASE}/produk.php`, { credentials: 'include' });
-                const json = await res.json();
-
-                if (!json.success) throw new Error(json.message || 'Gagal memuat produk');
-
-                tbody.innerHTML = '';
-
-                const labelKategori = {
-                    teh: '🍵 Teh',
-                    jeruk: '🍊 Jeruk',
-                    jus_buah: '🥤 Jus Buah',
-                    susu: '🥛 + Susu',
-                    spesial: '⭐ Spesial'
-                };
-
-                json.data.forEach(p => {
-                    const statusBadge = p.tersedia == 1
-                        ? `<span class="px-2 py-0.5 text-[10px] font-semibold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">Tersedia</span>`
-                        : `<span class="px-2 py-0.5 text-[10px] font-semibold bg-slate-100 text-slate-500 rounded-full border border-slate-200">Nonaktif</span>`;
-
-                    tbody.innerHTML += `
-                        <tr>
-                            <td class="py-3 px-3 font-semibold text-slate-900 text-xs">${p.nama}</td>
-                            <td class="py-3 px-3 text-xs text-slate-600">${labelKategori[p.kategori] ?? p.kategori}</td>
-                            <td class="py-3 px-3 text-xs font-bold text-slate-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</td>
-                            <td class="py-3 px-3">${statusBadge}</td>
-                            <td class="py-3 px-3 text-center">
-                                <button class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
-                                <button class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
-                            </td>
-                        </tr>`;
-                });
-
-            } catch (err) {
-                tbody.innerHTML = `
+    async function loadProduk() {
+        const tbody = document.getElementById('tbody-produk');
+        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-slate-400"><i class="fas fa-spinner fa-spin mr-2"></i> Memuat data produk...</td></tr>`;
+        try {
+            const res = await fetch(`${API_BASE}/produk.php`, { credentials: 'include' });
+            const json = await res.json();
+            if (json.status !== 'ok') throw new Error(json.message || 'Gagal memuat produk');
+            tbody.innerHTML = '';
+            json.data.forEach(p => {
+                const badge = p.tersedia == 1
+                    ? `<span class="px-2 py-0.5 text-[10px] font-semibold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">Tersedia</span>`
+                    : `<span class="px-2 py-0.5 text-[10px] font-semibold bg-slate-100 text-slate-500 rounded-full border border-slate-200">Nonaktif</span>`;
+                tbody.innerHTML += `
                     <tr>
-                        <td colspan="5" class="py-6 text-center text-sm text-rose-500">
-                            <i class="fas fa-circle-exclamation mr-2"></i> ${err.message}
+                        <td class="py-3 px-3 font-semibold text-slate-900 text-xs">${p.nama}</td>
+                        <td class="py-3 px-3 text-xs text-slate-600">${labelKategori[p.kategori] ?? p.kategori}</td>
+                        <td class="py-3 px-3 text-xs font-bold text-slate-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</td>
+                        <td class="py-3 px-3">${badge}</td>
+                        <td class="py-3 px-3 text-center">
+                            <button class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
+                            <button class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
                         </td>
                     </tr>`;
-            }
+            });
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-rose-500"><i class="fas fa-circle-exclamation mr-2"></i>${err.message}</td></tr>`;
         }
-    </script>
+    }
+
+    async function submitTambahProduk(e) {
+        e.preventDefault();
+        const btnText   = document.getElementById('btn-submit-text');
+        const spinner   = document.getElementById('btn-submit-spinner');
+        const btn       = document.getElementById('btn-submit-tambah');
+        const errorBox  = document.getElementById('form-error');
+
+        btnText.innerHTML = 'Menyimpan...';
+        spinner.classList.remove('hidden');
+        btn.disabled = true;
+        errorBox.classList.add('hidden');
+
+        const payload = {
+            nama:     document.getElementById('input-nama').value.trim(),
+            kategori: document.getElementById('input-kategori').value,
+            harga:    parseInt(document.getElementById('input-harga').value),
+            stok:     parseInt(document.getElementById('input-stok').value) || 0,
+            tersedia: document.getElementById('input-tersedia').checked,
+            gambar:   document.getElementById('input-gambar').value.trim(),
+        };
+
+        try {
+            const res = await fetch(`${API_BASE}/produk.php`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Gagal menyimpan produk.');
+            document.getElementById('form-tambah-produk').reset();
+            document.getElementById('preview-gambar').classList.add('hidden');
+            await loadProduk();
+            showToast('✅ Produk berhasil ditambahkan!', 'green');
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.classList.remove('hidden');
+        } finally {
+            btnText.innerHTML = '<i class="fas fa-save mr-1"></i> Simpan ke User View';
+            spinner.classList.add('hidden');
+            btn.disabled = false;
+        }
+    }
+
+    // Preview gambar real-time
+    document.getElementById('input-gambar').addEventListener('input', function () {
+        const url = this.value.trim();
+        const preview = document.getElementById('preview-gambar');
+        const img = document.getElementById('img-preview');
+        if (url) { img.src = url; preview.classList.remove('hidden'); img.onerror = () => preview.classList.add('hidden'); }
+        else { preview.classList.add('hidden'); }
+    });
+
+    function showToast(message, color = 'green') {
+        const colors = { green: 'bg-amber-500', red: 'bg-rose-500' };
+        const toast = document.createElement('div');
+        toast.className = `fixed bottom-6 right-6 z-[9999] ${colors[color]} text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-lg transition-all duration-300 opacity-0 translate-y-2`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-2'));
+        setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+</script>
 </body>
 </html>
