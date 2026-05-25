@@ -30,13 +30,40 @@ let keranjang = {};
    ============================ */
 function renderProduk() {
     const container = document.getElementById('daftar-produk');
-    container.innerHTML = produkList.map((p, i) => `
-        <div class="kartu-produk"
+
+    // Produk tersedia duluan, habis di bawah
+    const sorted = [...produkList].sort((a, b) => b.tersedia - a.tersedia);
+
+    container.innerHTML = sorted.map((p, i) => {
+        const habis = p.tersedia == 0;
+
+        const badgeHabis = habis
+            ? `<div class="label-produk" style="background:#ef4444;">Habis</div>`
+            : (p.label ? `<div class="label-produk">${p.label}</div>` : '');
+
+        const qtyCtrl = habis
+            ? `<div class="qty-ctrl">
+                   <button class="btn-qty btn-min" disabled style="opacity:0.4;cursor:not-allowed;">−</button>
+                   <span class="qty-display" id="qty-${p.id}">0</span>
+                   <button class="btn-qty btn-plus" disabled style="opacity:0.4;cursor:not-allowed;">+</button>
+               </div>`
+            : `<div class="qty-ctrl">
+                   <button class="btn-qty btn-min"
+                           onclick="kurang('${p.id}', '${p.nama}', ${p.harga})"
+                           aria-label="Kurangi ${p.nama}">−</button>
+                   <span class="qty-display" id="qty-${p.id}">0</span>
+                   <button class="btn-qty btn-plus"
+                           onclick="tambah('${p.id}', '${p.nama}', ${p.harga})"
+                           aria-label="Tambah ${p.nama}">+</button>
+               </div>`;
+
+        return `
+        <div class="kartu-produk${habis ? ' habis' : ''}"
              data-id="${p.id}"
              data-kategori="${p.kategori}"
              data-nama="${p.nama.toLowerCase()}"
-             style="animation-delay: ${i * 0.04}s">
-            ${p.label ? `<div class="label-produk">${p.label}</div>` : ''}
+             style="animation-delay: ${i * 0.04}s${habis ? '; opacity: 0.55;' : ''}">
+            ${badgeHabis}
             <div class="kartu-gambar">
                 <img src="${p.gambar_url}"
                      alt="${p.nama}"
@@ -48,26 +75,20 @@ function renderProduk() {
                 <p>${p.deskripsi}</p>
                 <div class="kartu-bawah">
                     <span class="harga">Rp ${p.harga.toLocaleString('id-ID')}</span>
-                    <div class="qty-ctrl">
-                        <button class="btn-qty btn-min"
-                                onclick="kurang('${p.id}', '${p.nama}', ${p.harga})"
-                                aria-label="Kurangi ${p.nama}">−</button>
-                        <span class="qty-display" id="qty-${p.id}">0</span>
-                        <button class="btn-qty btn-plus"
-                                onclick="tambah('${p.id}', '${p.nama}', ${p.harga})"
-                                aria-label="Tambah ${p.nama}">+</button>
-                    </div>
+                    ${qtyCtrl}
                 </div>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 }
-
 
 /* ============================
    CART ACTIONS
    ============================ */
 function tambah(id, nama, harga) {
+    const produk = produkList.find(p => p.id == id);
+    if (!produk || produk.tersedia == 0) return;
+
     if (keranjang[id]) {
         keranjang[id].qty++;
     } else {
