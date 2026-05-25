@@ -24,5 +24,9 @@
       "source": "/api/pesanan.php",
       "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/pesanan.php"
     }
+    {
+      "source": "/api/status_pesanan.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/status_pesanan.php"
+    }
   ]
 }
