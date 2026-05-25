@@ -336,9 +336,7 @@
                         <td class="py-3 px-3 text-center">
                             <button onclick="openModalEdit(${p.id},'${p.nama.replace(/'/g,"\\'")}','${p.kategori}',${p.harga},${p.stok},${p.tersedia},'${p.gambar??''}')"
                                 class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
-                            <button onclick="hapusProduk(${p.id}, '${p.nama.replace(/'/g, \"\\\\'\")}')">
-                                <i class="fas fa-trash-can"></i>
-                            </button>
+                            <button onclick="hapusProduk(${p.id}, this.dataset.nama)" data-nama="${p.nama}" class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
                         </td>
                     </tr>`;
             });
