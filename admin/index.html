@@ -666,7 +666,7 @@
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="font-bold text-slate-900 text-sm">${escHtml(p.nama_pembeli)}</p>
-                        <p class="text-xs text-slate-500">🪑 Meja ${escHtml(String(p.nomor_meja))}</p>
+                        <p class="text-xs text-slate-500">🔢 Antrian No. ${p.nomor_antrian ?? '—'}</p>
                         <p class="text-xs text-slate-400 mt-0.5">🕐 ${formatWaktu(p.created_at)}</p>
                     </div>
                     <span class="bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Pending</span>
