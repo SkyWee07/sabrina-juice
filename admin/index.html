@@ -407,7 +407,74 @@
         requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-2'));
         setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
     }
+        // ── MODAL EDIT ───────────────────────────────
+    function openModalEdit(id, nama, kategori, harga, stok, tersedia, gambar) {
+        document.getElementById('edit-id').value       = id;
+        document.getElementById('edit-nama').value     = nama;
+        document.getElementById('edit-kategori').value = kategori;
+        document.getElementById('edit-harga').value    = harga;
+        document.getElementById('edit-stok').value     = stok;
+        document.getElementById('edit-tersedia').checked = tersedia == 1;
+        document.getElementById('edit-gambar').value   = gambar;
+        document.getElementById('edit-error').classList.add('hidden');
+        document.getElementById('modal-edit').classList.remove('hidden');
+        document.getElementById('modal-edit').classList.add('flex');
+    }
+    
+    function closeModalEdit() {
+        document.getElementById('modal-edit').classList.add('hidden');
+        document.getElementById('modal-edit').classList.remove('flex');
+    }
+    
+    document.getElementById('modal-edit').addEventListener('click', function(e) {
+        if (e.target === this) closeModalEdit();
+    });
+    
+    async function submitEditProduk(e) {
+        e.preventDefault();
+        const btnText  = document.getElementById('btn-edit-text');
+        const spinner  = document.getElementById('btn-edit-spinner');
+        const btn      = document.getElementById('btn-edit-submit');
+        const errorBox = document.getElementById('edit-error');
+    
+        btnText.textContent = 'Menyimpan...';
+        spinner.classList.remove('hidden');
+        btn.disabled = true;
+        errorBox.classList.add('hidden');
+    
+        const payload = {
+            id:       parseInt(document.getElementById('edit-id').value),
+            nama:     document.getElementById('edit-nama').value.trim(),
+            kategori: document.getElementById('edit-kategori').value,
+            harga:    parseInt(document.getElementById('edit-harga').value),
+            stok:     parseInt(document.getElementById('edit-stok').value) || 0,
+            tersedia: document.getElementById('edit-tersedia').checked,
+            gambar:   document.getElementById('edit-gambar').value.trim(),
+        };
+    
+        try {
+            const res = await fetch(`${API_BASE}/produk.php`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Gagal mengupdate produk.');
+            closeModalEdit();
+            await loadProduk();
+            showToast('✅ Produk berhasil diupdate!', 'green');
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.classList.remove('hidden');
+        } finally {
+            btnText.textContent = 'Simpan Perubahan';
+            spinner.classList.add('hidden');
+            btn.disabled = false;
+        }
+}
 </script>
+    
 <div id="modal-edit" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
     <div class="bg-amber-500 px-6 py-4 flex items-center justify-between">
