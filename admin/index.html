@@ -6,11 +6,14 @@
     <title>Sabrina Juice - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body class="text-slate-800 antialiased">
@@ -49,8 +52,7 @@
                     class="menu-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200">
                     <i class="fas fa-receipt w-5 text-center"></i>
                     <span>Antrean Pesanan</span>
-                    <span id="badge-pesanan"
-                        class="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                    <span id="badge-pesanan" class="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
                 </button>
             </nav>
         </div>
@@ -71,56 +73,131 @@
     <!-- MAIN -->
     <main class="flex-1 p-6 overflow-y-auto">
 
-        <!-- DASHBOARD -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-                <div class="bg-gradient-to-br from-emerald-400 to-teal-500 px-5 pt-5 pb-8 relative">
-                    <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Total Pendapatan</span>
-                    <h3 id="stat-pendapatan" class="text-2xl font-black text-white mt-1">Rp 0</h3>
-                    <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
-                        <i class="fas fa-wallet"></i>
+        <!-- ══ DASHBOARD VIEW ══ -->
+        <div id="dashboard-view" class="tab-content active">
+
+            <!-- Header -->
+            <header class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard</h2>
+                <p id="dashboard-subtitle" class="text-sm text-slate-500 mt-0.5">Memuat data...</p>
+            </header>
+
+            <!-- ── Statistik Hari Ini ── -->
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Hari Ini</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-gradient-to-br from-emerald-400 to-teal-500 px-5 pt-5 pb-8 relative">
+                        <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Total Pendapatan</span>
+                        <h3 id="stat-pendapatan" class="text-2xl font-black text-white mt-1">—</h3>
+                        <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="px-5 py-3 bg-emerald-50 text-xs text-emerald-700 font-medium">📅 Hari ini</div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-gradient-to-br from-amber-400 to-orange-500 px-5 pt-5 pb-8 relative">
+                        <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Cup Terjual</span>
+                        <h3 id="stat-cup" class="text-2xl font-black text-white mt-1">—</h3>
+                        <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
+                            <i class="fas fa-wine-glass-alt"></i>
+                        </div>
+                    </div>
+                    <div class="px-5 py-3 bg-amber-50 text-xs text-amber-700 font-medium">📅 Hari ini</div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-gradient-to-br from-rose-400 to-pink-500 px-5 pt-5 pb-8 relative">
+                        <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Antrian Pending</span>
+                        <h3 id="stat-pending" class="text-2xl font-black text-white mt-1">—</h3>
+                        <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                    </div>
+                    <div class="px-5 py-3 bg-rose-50 text-xs text-rose-700 font-medium">🔴 Real-time</div>
+                </div>
+
+            </div>
+
+            <!-- ── Rekap Bulan Ini ── -->
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Rekap Bulan Ini</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-500 text-xl shrink-0">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide">Total Pendapatan</p>
+                        <p id="stat-pendapatan-bulan" class="text-xl font-black text-slate-900 mt-0.5">—</p>
                     </div>
                 </div>
-                <div class="px-5 py-3 bg-emerald-50 text-xs text-emerald-700 font-medium">
-                    📅 Hari ini
-                </div>
-            </div>
-        
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-                <div class="bg-gradient-to-br from-amber-400 to-orange-500 px-5 pt-5 pb-8 relative">
-                    <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Cup Terjual</span>
-                    <h3 id="stat-cup" class="text-2xl font-black text-white mt-1">0 Cup</h3>
-                    <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
-                        <i class="fas fa-wine-glass-alt"></i>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-500 text-xl shrink-0">
+                        <i class="fas fa-cup-straw"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide">Cup Terjual</p>
+                        <p id="stat-cup-bulan" class="text-xl font-black text-slate-900 mt-0.5">—</p>
                     </div>
                 </div>
-                <div class="px-5 py-3 bg-amber-50 text-xs text-amber-700 font-medium">
-                    📅 Hari ini
-                </div>
-            </div>
-        
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-                <div class="bg-gradient-to-br from-rose-400 to-pink-500 px-5 pt-5 pb-8 relative">
-                    <span class="text-white text-xs font-semibold uppercase tracking-widest opacity-80">Antrian Pending</span>
-                    <h3 id="stat-pending" class="text-2xl font-black text-white mt-1">0 Pesanan</h3>
-                    <div class="absolute right-4 top-4 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white text-lg">
-                        <i class="fas fa-receipt"></i>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-500 text-xl shrink-0">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide">Rata-rata / Hari</p>
+                        <p id="stat-rata" class="text-xl font-black text-slate-900 mt-0.5">—</p>
                     </div>
                 </div>
-                <div class="px-5 py-3 bg-rose-50 text-xs text-rose-700 font-medium">
-                    🔴 Real-time
-                </div>
+
             </div>
+
+            <!-- ── Grafik + Top Produk ── -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+                <!-- Grafik 7 hari -->
+                <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm">Pendapatan 7 Hari Terakhir</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Hanya pesanan berstatus selesai</p>
+                        </div>
+                        <span class="text-xs bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-medium">7 Hari</span>
+                    </div>
+                    <div class="relative h-52">
+                        <canvas id="chart-grafik"></canvas>
+                    </div>
+                </div>
+
+                <!-- Top 3 produk -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+                    <h3 class="font-bold text-slate-900 text-sm mb-1">🏆 Produk Terlaris</h3>
+                    <p class="text-xs text-slate-400 mb-4">Bulan ini berdasarkan cup terjual</p>
+                    <div id="top-produk-list" class="space-y-3">
+                        <div class="text-xs text-slate-400 text-center py-4">Memuat...</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Last update -->
+            <p id="dashboard-last-update" class="text-right text-xs text-slate-300 mt-4"></p>
+
         </div>
+        <!-- ══ END DASHBOARD VIEW ══ -->
 
         <!-- PRODUK -->
-        <div id="produk-view" class="tab-content hidden">
+        <div id="produk-view" class="tab-content">
             <header class="border-b border-slate-200 pb-5 mb-6">
                 <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Kelola Katalog Menu</h2>
                 <p class="text-sm text-slate-500">Tambah menu baru, edit harga, atau hapus varian jus yang tersedia untuk user.</p>
             </header>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- FORM TAMBAH -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-fit">
                     <h3 class="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
                         <i class="fas fa-plus-circle text-amber-500"></i> Tambah Menu Baru
@@ -187,8 +264,6 @@
                         </button>
                     </form>
                 </div>
-
-                <!-- TABEL PRODUK -->
                 <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                     <h3 class="font-bold text-slate-900 text-base mb-4"><i class="fas fa-list text-slate-400 mr-1"></i> Menu Aktif di Halaman Pembeli</h3>
                     <div class="overflow-x-auto">
@@ -216,7 +291,7 @@
         </div>
 
         <!-- STOK -->
-        <div id="stok-view" class="tab-content hidden">
+        <div id="stok-view" class="tab-content">
             <header class="border-b border-slate-200 pb-5 mb-6 flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Gudang & Inventaris Bahan Baku</h2>
@@ -272,13 +347,12 @@
             </div>
         </div>
 
-        <!-- PESANAN ✅ FASE 3 -->
-        <div id="pesanan-view" class="tab-content hidden">
+        <!-- PESANAN -->
+        <div id="pesanan-view" class="tab-content">
             <header class="border-b border-slate-200 pb-5 mb-6">
                 <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Antrean Pesanan Masuk</h2>
                 <p class="text-sm text-slate-500">Daftar pesanan dari pembeli. Klik selesai setelah jus selesai dibuat.</p>
             </header>
-
             <div class="flex items-center justify-between mb-5">
                 <span id="pesanan-last-update" class="text-xs text-slate-400"></span>
                 <button onclick="loadPesanan()"
@@ -286,15 +360,11 @@
                     <i class="fas fa-rotate-right"></i> Refresh
                 </button>
             </div>
-
-            <!-- Empty state -->
             <div id="pesanan-empty" class="hidden flex-col items-center justify-center py-20 text-slate-400 text-center">
                 <div class="text-6xl mb-4">✅</div>
                 <p class="text-lg font-semibold text-slate-600">Tidak ada pesanan masuk</p>
                 <p class="text-sm mt-1">Semua pesanan sudah selesai atau belum ada yang memesan.</p>
             </div>
-
-            <!-- Daftar kartu pesanan -->
             <div id="pesanan-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
         </div>
 
@@ -345,7 +415,7 @@
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Deskripsi</label>
-        <textarea id="edit-deskripsi" rows="3" placeholder="Deskripsi singkat produk (opsional)"
+        <textarea id="edit-deskripsi" rows="3"
           class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500"></textarea>
       </div>
       <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
@@ -374,448 +444,561 @@
 </div>
 
 <script>
-    const API_BASE = '/api/admin';
+const API_BASE = '/api/admin';
 
-    // ── AUTH GUARD ───────────────────────────────────────
-    if (sessionStorage.getItem('admin_logged_in') !== 'true') {
-        window.location.href = 'login.html';
-    }
+// ── AUTH GUARD ────────────────────────────────────────
+if (sessionStorage.getItem('admin_logged_in') !== 'true') {
+    window.location.href = 'login.html';
+}
 
-    async function logout() {
-        try { await fetch(`${API_BASE}/logout.php`, { credentials: 'include' }); } catch (_) {}
-        sessionStorage.clear();
-        window.location.href = 'login.html';
-    }
+async function logout() {
+    try { await fetch(`${API_BASE}/logout.php`, { credentials: 'include' }); } catch (_) {}
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+}
 
-    // ── SWITCH TAB ───────────────────────────────────────
-    function switchTab(viewId, clickedButton) {
-        document.querySelectorAll('.tab-content').forEach(v => {
-            v.classList.remove('block');
-            v.classList.add('hidden');
-        });
-        document.getElementById(viewId).classList.remove('hidden');
-        document.getElementById(viewId).classList.add('block');
+// ══════════════════════════════════════════════════════
+//  SWITCH TAB
+// ══════════════════════════════════════════════════════
+let statistikInterval = null;
 
-        document.querySelectorAll('.menu-btn').forEach(btn => {
-            btn.classList.remove('bg-amber-500', 'text-white', 'font-medium');
-            btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
-        });
-        clickedButton.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
-        clickedButton.classList.add('bg-amber-500', 'text-white', 'font-medium');
-
-        if (viewId === 'produk-view') loadProduk();
-
-        if (viewId === 'pesanan-view') {
-            loadPesanan();
-            startPolling();
-        } else {
-            stopPolling();
-        }
-    }
-
-    // ── TOAST ────────────────────────────────────────────
-    function showToast(message, color = 'green') {
-        const colors = { green: 'bg-amber-500', red: 'bg-rose-500', gray: 'bg-slate-500' };
-        const toast = document.createElement('div');
-        toast.className = `fixed bottom-6 right-6 z-[9999] ${colors[color] ?? 'bg-slate-500'} text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-lg transition-all duration-300 opacity-0 translate-y-2`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-2'));
-        setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
-    }
-
-    // ══════════════════════════════════════════════════════
-    //  PRODUK
-    // ══════════════════════════════════════════════════════
-    const labelKategori = { teh:'🍵 Teh', jeruk:'🍊 Jeruk', jus_buah:'🥤 Jus Buah', susu:'🥛 + Susu', spesial:'⭐ Spesial' };
-
-    async function loadProduk() {
-        const tbody = document.getElementById('tbody-produk');
-        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-slate-400"><i class="fas fa-spinner fa-spin mr-2"></i> Memuat data produk...</td></tr>`;
-        try {
-            const res = await fetch(`${API_BASE}/produk.php`, { credentials: 'include' });
-            const json = await res.json();
-            if (json.status !== 'ok') throw new Error(json.message || 'Gagal memuat produk');
-            tbody.innerHTML = '';
-            json.data.forEach(p => {
-                const tersedia = p.tersedia == 1 || p.tersedia === true;
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="py-3 px-3 font-semibold text-slate-900 text-xs">${p.nama}</td>
-                        <td class="py-3 px-3 text-xs text-slate-600">${labelKategori[p.kategori] ?? p.kategori}</td>
-                        <td class="py-3 px-3 text-xs font-bold text-slate-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</td>
-                        <td class="py-3 px-3">
-                            <button onclick="toggleTersedia(${p.id}, this)"
-                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${tersedia ? 'bg-green-500' : 'bg-gray-300'}">
-                                <span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 ${tersedia ? 'translate-x-6' : 'translate-x-1'}"></span>
-                            </button>
-                        </td>
-                        <td class="py-3 px-3 text-center">
-                            <button onclick="openModalEdit(${p.id},'${p.nama.replace(/'/g,"\\'")}','${p.kategori}',${p.harga},${p.stok ?? 0},${p.tersedia},'${p.gambar ?? ''}','${(p.deskripsi ?? '').replace(/'/g,"\\'")}')"
-                                class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
-                            <button onclick="hapusProduk(${p.id}, this.dataset.nama)" data-nama="${p.nama}"
-                                class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
-                        </td>
-                    </tr>`;
-            });
-        } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-rose-500"><i class="fas fa-circle-exclamation mr-2"></i>${err.message}</td></tr>`;
-        }
-    }
-
-    async function submitTambahProduk(e) {
-        e.preventDefault();
-        const btnText  = document.getElementById('btn-submit-text');
-        const spinner  = document.getElementById('btn-submit-spinner');
-        const btn      = document.getElementById('btn-submit-tambah');
-        const errorBox = document.getElementById('form-error');
-
-        btnText.innerHTML = 'Menyimpan...';
-        spinner.classList.remove('hidden');
-        btn.disabled = true;
-        errorBox.classList.add('hidden');
-
-        const payload = {
-            nama:      document.getElementById('input-nama').value.trim(),
-            kategori:  document.getElementById('input-kategori').value,
-            harga:     parseInt(document.getElementById('input-harga').value),
-            stok:      parseInt(document.getElementById('input-stok').value) || 0,
-            tersedia:  document.getElementById('input-tersedia').checked,
-            gambar:    document.getElementById('input-gambar').value.trim(),
-            deskripsi: document.getElementById('input-deskripsi').value.trim(),
-        };
-
-        try {
-            const res = await fetch(`${API_BASE}/produk.php`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Gagal menyimpan produk.');
-            document.getElementById('form-tambah-produk').reset();
-            document.getElementById('preview-gambar').classList.add('hidden');
-            await loadProduk();
-            showToast('✅ Produk berhasil ditambahkan!', 'green');
-        } catch (err) {
-            errorBox.textContent = err.message;
-            errorBox.classList.remove('hidden');
-        } finally {
-            btnText.innerHTML = "<i class='fas fa-save mr-1'></i> Simpan ke User View";
-            spinner.classList.add('hidden');
-            btn.disabled = false;
-        }
-    }
-
-    document.getElementById('input-gambar').addEventListener('input', function () {
-        const url = this.value.trim();
-        const preview = document.getElementById('preview-gambar');
-        const img = document.getElementById('img-preview');
-        if (url) { img.src = url; preview.classList.remove('hidden'); img.onerror = () => preview.classList.add('hidden'); }
-        else { preview.classList.add('hidden'); }
+function switchTab(viewId, clickedButton) {
+    // Sembunyikan semua tab
+    document.querySelectorAll('.tab-content').forEach(v => {
+        v.classList.remove('active');
     });
+    document.getElementById(viewId).classList.add('active');
 
-    async function toggleTersedia(id, btnEl) {
-        const isAktif = btnEl.classList.contains('bg-green-500');
-        btnEl.classList.toggle('bg-green-500', !isAktif);
-        btnEl.classList.toggle('bg-gray-300', isAktif);
-        const span = btnEl.querySelector('span');
-        span.classList.toggle('translate-x-6', !isAktif);
-        span.classList.toggle('translate-x-1', isAktif);
-        try {
-            const res = await fetch(`${API_BASE}/produk.php`, {
-                method: 'PATCH', credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
-            const json = await res.json();
-            if (json.status !== 'ok') throw new Error(json.message || 'Gagal');
-            const aktual = json.tersedia;
-            btnEl.classList.toggle('bg-green-500', aktual);
-            btnEl.classList.toggle('bg-gray-300', !aktual);
-            span.classList.toggle('translate-x-6', aktual);
-            span.classList.toggle('translate-x-1', !aktual);
-            showToast(aktual ? 'Produk diaktifkan ✅' : 'Produk dinonaktifkan', aktual ? 'green' : 'gray');
-        } catch (err) {
-            btnEl.classList.toggle('bg-green-500', isAktif);
-            btnEl.classList.toggle('bg-gray-300', !isAktif);
-            span.classList.toggle('translate-x-6', isAktif);
-            span.classList.toggle('translate-x-1', !isAktif);
-            showToast('Gagal update status: ' + err.message, 'red');
-        }
-    }
-
-    function openModalEdit(id, nama, kategori, harga, stok, tersedia, gambar, deskripsi) {
-        document.getElementById('edit-id').value         = id;
-        document.getElementById('edit-nama').value       = nama;
-        document.getElementById('edit-kategori').value   = kategori;
-        document.getElementById('edit-harga').value      = harga;
-        document.getElementById('edit-stok').value       = stok;
-        document.getElementById('edit-tersedia').checked = tersedia == 1;
-        document.getElementById('edit-gambar').value     = gambar;
-        document.getElementById('edit-deskripsi').value  = deskripsi ?? '';
-        document.getElementById('edit-error').classList.add('hidden');
-        document.getElementById('modal-edit').classList.remove('hidden');
-        document.getElementById('modal-edit').classList.add('flex');
-    }
-
-    function closeModalEdit() {
-        document.getElementById('modal-edit').classList.add('hidden');
-        document.getElementById('modal-edit').classList.remove('flex');
-    }
-
-    document.getElementById('modal-edit').addEventListener('click', function(e) {
-        if (e.target === this) closeModalEdit();
+    // Update sidebar style
+    document.querySelectorAll('.menu-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-white');
+        btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
     });
+    clickedButton.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-slate-200');
+    clickedButton.classList.add('bg-amber-500', 'text-white');
 
-    async function submitEditProduk(e) {
-        e.preventDefault();
-        const btnText  = document.getElementById('btn-edit-text');
-        const spinner  = document.getElementById('btn-edit-spinner');
-        const btn      = document.getElementById('btn-edit-submit');
-        const errorBox = document.getElementById('edit-error');
+    // Clear statistik interval dulu
+    if (statistikInterval) { clearInterval(statistikInterval); statistikInterval = null; }
 
-        btnText.textContent = 'Menyimpan...';
-        spinner.classList.remove('hidden');
-        btn.disabled = true;
-        errorBox.classList.add('hidden');
-
-        const payload = {
-            id:        parseInt(document.getElementById('edit-id').value),
-            nama:      document.getElementById('edit-nama').value.trim(),
-            kategori:  document.getElementById('edit-kategori').value,
-            harga:     parseInt(document.getElementById('edit-harga').value),
-            stok:      parseInt(document.getElementById('edit-stok').value) || 0,
-            tersedia:  document.getElementById('edit-tersedia').checked,
-            gambar:    document.getElementById('edit-gambar').value.trim(),
-            deskripsi: document.getElementById('edit-deskripsi').value.trim(),
-        };
-
-        try {
-            const res = await fetch(`${API_BASE}/produk.php`, {
-                method: 'PUT', credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Gagal mengupdate produk.');
-            closeModalEdit();
-            await loadProduk();
-            showToast('✅ Produk berhasil diupdate!', 'green');
-        } catch (err) {
-            errorBox.textContent = err.message;
-            errorBox.classList.remove('hidden');
-        } finally {
-            btnText.textContent = 'Simpan Perubahan';
-            spinner.classList.add('hidden');
-            btn.disabled = false;
-        }
+    if (viewId === 'dashboard-view') {
+        fetchStatistik();
+        statistikInterval = setInterval(fetchStatistik, 60000);
     }
+    if (viewId === 'produk-view') loadProduk();
+    if (viewId === 'pesanan-view') { loadPesanan(); startPolling(); }
+    else stopPolling();
+}
 
-    async function hapusProduk(id, nama) {
-        if (!confirm(`Hapus produk "${nama}"?\n\nTindakan ini tidak bisa dibatalkan.`)) return;
-        try {
-            const res = await fetch(`${API_BASE}/produk.php`, {
-                method: 'DELETE', credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
-            const json = await res.json();
-            if (json.status === 'ok') { showToast('Produk berhasil dihapus.', 'green'); loadProduk(); }
-            else showToast(json.message || 'Gagal menghapus produk.', 'red');
-        } catch (err) {
-            showToast('Terjadi kesalahan. Coba lagi.', 'red');
-        }
-    }
+// ── TOAST ─────────────────────────────────────────────
+function showToast(message, color = 'green') {
+    const colors = { green: 'bg-amber-500', red: 'bg-rose-500', gray: 'bg-slate-500' };
+    const toast = document.createElement('div');
+    toast.className = `fixed bottom-6 right-6 z-[9999] ${colors[color] ?? 'bg-slate-500'} text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-lg transition-all duration-300 opacity-0 translate-y-2`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-2'));
+    setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
+}
 
-    // ══════════════════════════════════════════════════════
-    //  FASE 3 — PESANAN
-    // ══════════════════════════════════════════════════════
-    let pollingInterval = null;
+// ══════════════════════════════════════════════════════
+//  FASE 4 — STATISTIK DASHBOARD
+// ══════════════════════════════════════════════════════
+let grafikChart = null;
 
-    async function loadPesanan() {
-        try {
-            const res = await fetch(`${API_BASE}/pesanan.php`, { credentials: 'include' });
-            const json = await res.json();
-            if (json.status !== 'ok') throw new Error(json.message || 'Gagal memuat pesanan');
-            renderPesanan(json.data);
-            updateBadge(json.data.length);
-            updateLastUpdate();
-        } catch (err) {
-            showToast('Gagal memuat pesanan: ' + err.message, 'red');
-        }
-    }
+const medalColors = ['text-yellow-500', 'text-slate-400', 'text-amber-700'];
+const medalIcons  = ['🥇', '🥈', '🥉'];
+const kategoriLabel = { teh:'🍵 Teh', jeruk:'🍊 Jeruk', jus_buah:'🥤 Jus Buah', susu:'🥛 + Susu', spesial:'⭐ Spesial' };
 
-    function renderPesanan(pesanan) {
-        const list  = document.getElementById('pesanan-list');
-        const empty = document.getElementById('pesanan-empty');
-        list.innerHTML = '';
-    
-        if (!pesanan || pesanan.length === 0) {
-            empty.classList.remove('hidden');
-            empty.classList.add('flex');
-            list.classList.add('hidden');
-            return;
-        }
-    
-        empty.classList.add('hidden');
-        empty.classList.remove('flex');
-        list.classList.remove('hidden');
-    
-        pesanan.forEach(p => {
-            const itemsHTML = (p.items || []).map(item => `
-                <li class="flex justify-between text-sm py-1.5 border-b border-gray-100 last:border-0">
-                    <span class="text-gray-700">${escHtml(item.nama_produk)}
-                        <span class="text-gray-400 text-xs">×${item.jumlah}</span>
-                    </span>
-                    <span class="font-semibold text-gray-800 text-sm">
-                        ${formatRupiah(item.harga_satuan * item.jumlah)}
-                    </span>
-                </li>
-            `).join('');
-    
-            const waHTML = p.no_whatsapp
-                ? `<a href="https://wa.me/62${p.no_whatsapp.replace(/^0/, '')}" target="_blank"
-                       class="text-xs text-green-600 hover:underline flex items-center gap-1 mt-0.5">
-                       📱 ${escHtml(p.no_whatsapp)}
-                   </a>`
-                : `<span class="text-xs text-slate-400 mt-0.5 block">Tanpa WA</span>`;
-    
-            const catatanHTML = p.catatan
-                ? `<div class="mt-3 bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2 text-xs text-yellow-800">
-                       📝 <span class="font-semibold">Catatan:</span> ${escHtml(p.catatan)}
-                   </div>`
-                : '';
-    
-            const card = document.createElement('div');
-            card.className = 'bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-200';
-            card.dataset.id = p.id;
-            card.innerHTML = `
-                <!-- Header kartu -->
-                <div class="bg-gradient-to-r from-orange-400 to-yellow-400 px-4 py-3 flex items-center justify-between">
-                    <div>
-                        <span class="text-white text-[10px] font-semibold uppercase tracking-widest opacity-80">Antrian</span>
-                        <div class="text-white text-4xl font-black leading-none">${p.nomor_antrian ?? '—'}</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-white font-bold text-sm">${escHtml(p.nama_pelanggan)}</p>
-                        ${waHTML}
-                        <p class="text-white text-[10px] opacity-70 mt-1">${formatWaktu(p.created_at)}</p>
-                    </div>
-                </div>
-    
-                <!-- Item list -->
-                <div class="px-4 py-3 flex-1">
-                    <ul>${itemsHTML || '<li class="text-xs text-slate-400 py-1">—</li>'}</ul>
-                    ${catatanHTML}
-                </div>
-    
-                <!-- Footer -->
-                <div class="px-4 pb-4 pt-2 border-t border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wide">Total</p>
-                        <p class="text-lg font-black text-gray-800">${formatRupiah(p.total_harga)}</p>
-                    </div>
-                    <button onclick="selesaikanPesanan(${p.id}, this)"
-                        class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all flex items-center gap-1.5">
-                        <i class="fas fa-check"></i> Selesai Buat
-                    </button>
-                </div>
-            `;
-            list.appendChild(card);
-        });
-    }
+async function fetchStatistik() {
+    try {
+        const res  = await fetch(`${API_BASE}/statistik.php`, { credentials: 'include' });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || 'Gagal fetch statistik');
 
-    async function selesaikanPesanan(id, btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Proses...';
-        try {
-            const res = await fetch(`${API_BASE}/pesanan.php`, {
-                method: 'PUT', credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
-            const json = await res.json();
-            if (json.status !== 'ok') throw new Error(json.message || 'Gagal update pesanan');
+        const d = json.data;
 
-            const card = btn.closest('[data-id]');
-            card.style.transition = 'opacity 0.3s, transform 0.3s';
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                card.remove();
-                const list = document.getElementById('pesanan-list');
-                if (list.children.length === 0) {
-                    document.getElementById('pesanan-empty').classList.remove('hidden');
-                    document.getElementById('pesanan-empty').classList.add('flex');
-                    list.classList.add('hidden');
-                }
-                const badge = document.getElementById('badge-pesanan');
-                updateBadge(Math.max(0, (parseInt(badge.textContent) || 0) - 1));
-            }, 300);
+        // ── Hari ini ──
+        document.getElementById('stat-pendapatan').textContent = formatRupiah(d.pendapatan);
+        document.getElementById('stat-cup').textContent        = d.cup_terjual + ' Cup';
+        document.getElementById('stat-pending').textContent    = d.pending + ' Pesanan';
 
-            showToast('Pesanan ditandai selesai ✅', 'green');
-        } catch (err) {
-            showToast('Gagal: ' + err.message, 'red');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check"></i> Selesai Buat';
-        }
-    }
+        // ── Bulan ini ──
+        document.getElementById('stat-pendapatan-bulan').textContent = formatRupiah(d.pendapatan_bulan);
+        document.getElementById('stat-cup-bulan').textContent        = d.cup_bulan + ' Cup';
+        document.getElementById('stat-rata').textContent             = d.rata_per_hari + ' Pesanan / hari';
 
-    function startPolling() {
-        if (pollingInterval) clearInterval(pollingInterval);
-        pollingInterval = setInterval(loadPesanan, 30000);
-    }
+        // ── Subtitle header ──
+        document.getElementById('dashboard-subtitle').textContent =
+            `Rekap ${d.bulan_label} · Update otomatis tiap 60 detik`;
 
-    function stopPolling() {
-        if (pollingInterval) { clearInterval(pollingInterval); pollingInterval = null; }
-    }
+        // ── Top produk ──
+        renderTopProduk(d.top_produk);
 
-    function updateBadge(count) {
-        const badge = document.getElementById('badge-pesanan');
-        if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
-        else { badge.classList.add('hidden'); }
-    }
+        // ── Grafik ──
+        renderGrafik(d.grafik_7hari);
 
-    function updateLastUpdate() {
-        const el  = document.getElementById('pesanan-last-update');
+        // ── Last update ──
         const now = new Date();
-        const pad = n => String(n).padStart(2, '0');
-        el.textContent = `Update: ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-    }
+        document.getElementById('dashboard-last-update').textContent =
+            `Terakhir diperbarui: ${now.toLocaleTimeString('id-ID')}`;
 
-    // ── Background badge polling (semua tab) ─────────────
-    async function pollBadgeSaja() {
-        try {
-            const res  = await fetch(`${API_BASE}/pesanan.php`, { credentials: 'include' });
-            const json = await res.json();
-            if (json.status === 'ok') updateBadge(json.data.length);
-        } catch (_) {}
+    } catch (err) {
+        console.error('Gagal fetch statistik:', err);
     }
+}
 
-    // ── Helper ───────────────────────────────────────────
-    function formatRupiah(angka) {
-        return 'Rp ' + parseInt(angka).toLocaleString('id-ID');
+function renderTopProduk(list) {
+    const el = document.getElementById('top-produk-list');
+    if (!list || list.length === 0) {
+        el.innerHTML = `<div class="text-xs text-slate-400 text-center py-6">Belum ada data penjualan bulan ini.</div>`;
+        return;
     }
+    const maxTerjual = Math.max(...list.map(p => parseInt(p.total_terjual)));
+    el.innerHTML = list.map((p, i) => {
+        const pct = maxTerjual > 0 ? Math.round((parseInt(p.total_terjual) / maxTerjual) * 100) : 0;
+        const barColors = ['bg-amber-400', 'bg-slate-300', 'bg-orange-300'];
+        return `
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="text-lg shrink-0">${medalIcons[i]}</span>
+                        <div class="min-w-0">
+                            <p class="text-sm font-bold text-slate-900 truncate">${escHtml(p.nama)}</p>
+                            <p class="text-[10px] text-slate-400">${kategoriLabel[p.kategori] ?? p.kategori}</p>
+                        </div>
+                    </div>
+                    <span class="text-sm font-black text-slate-700 shrink-0 ml-2">${p.total_terjual} cup</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="${barColors[i]} h-full rounded-full transition-all duration-700" style="width:${pct}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
-    function formatWaktu(str) {
-        if (!str) return '—';
-        return new Date(str).toLocaleString('id-ID', {
-            day: '2-digit', month: 'short', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
+function renderGrafik(data) {
+    const ctx = document.getElementById('chart-grafik').getContext('2d');
+
+    const labels      = data.map(d => d.label);
+    const pendapatan  = data.map(d => d.pendapatan);
+
+    if (grafikChart) grafikChart.destroy();
+
+    grafikChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Pendapatan (Rp)',
+                data: pendapatan,
+                backgroundColor: pendapatan.map((_, i) =>
+                    i === pendapatan.length - 1
+                        ? 'rgba(245, 158, 11, 0.9)'   // hari ini: amber solid
+                        : 'rgba(245, 158, 11, 0.25)'  // hari lain: transparan
+                ),
+                borderColor: 'rgba(245, 158, 11, 0.8)',
+                borderWidth: 1.5,
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ' ' + formatRupiah(ctx.parsed.y)
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 11 }, color: '#94a3b8' }
+                },
+                y: {
+                    grid: { color: '#f1f5f9' },
+                    ticks: {
+                        font: { size: 10 },
+                        color: '#94a3b8',
+                        callback: v => v >= 1000 ? 'Rp ' + (v/1000) + 'K' : 'Rp ' + v
+                    }
+                }
+            }
+        }
+    });
+}
+
+// ══════════════════════════════════════════════════════
+//  PRODUK
+// ══════════════════════════════════════════════════════
+const labelKategori = { teh:'🍵 Teh', jeruk:'🍊 Jeruk', jus_buah:'🥤 Jus Buah', susu:'🥛 + Susu', spesial:'⭐ Spesial' };
+
+async function loadProduk() {
+    const tbody = document.getElementById('tbody-produk');
+    tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-slate-400"><i class="fas fa-spinner fa-spin mr-2"></i> Memuat data produk...</td></tr>`;
+    try {
+        const res  = await fetch(`${API_BASE}/produk.php`, { credentials: 'include' });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || 'Gagal memuat produk');
+        tbody.innerHTML = '';
+        json.data.forEach(p => {
+            const tersedia = p.tersedia == 1 || p.tersedia === true;
+            tbody.innerHTML += `
+                <tr>
+                    <td class="py-3 px-3 font-semibold text-slate-900 text-xs">${p.nama}</td>
+                    <td class="py-3 px-3 text-xs text-slate-600">${labelKategori[p.kategori] ?? p.kategori}</td>
+                    <td class="py-3 px-3 text-xs font-bold text-slate-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-3">
+                        <button onclick="toggleTersedia(${p.id}, this)"
+                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${tersedia ? 'bg-green-500' : 'bg-gray-300'}">
+                            <span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 ${tersedia ? 'translate-x-6' : 'translate-x-1'}"></span>
+                        </button>
+                    </td>
+                    <td class="py-3 px-3 text-center">
+                        <button onclick="openModalEdit(${p.id},'${p.nama.replace(/'/g,"\\'")}','${p.kategori}',${p.harga},${p.stok ?? 0},${p.tersedia},'${p.gambar ?? ''}','${(p.deskripsi ?? '').replace(/'/g,"\\'")}')"
+                            class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
+                        <button onclick="hapusProduk(${p.id}, this.dataset.nama)" data-nama="${p.nama}"
+                            class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
+                    </td>
+                </tr>`;
         });
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-sm text-rose-500"><i class="fas fa-circle-exclamation mr-2"></i>${err.message}</td></tr>`;
     }
+}
 
-    function escHtml(str) {
-        return String(str)
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+async function submitTambahProduk(e) {
+    e.preventDefault();
+    const btnText  = document.getElementById('btn-submit-text');
+    const spinner  = document.getElementById('btn-submit-spinner');
+    const btn      = document.getElementById('btn-submit-tambah');
+    const errorBox = document.getElementById('form-error');
+    btnText.innerHTML = 'Menyimpan...';
+    spinner.classList.remove('hidden');
+    btn.disabled = true;
+    errorBox.classList.add('hidden');
+    const payload = {
+        nama:      document.getElementById('input-nama').value.trim(),
+        kategori:  document.getElementById('input-kategori').value,
+        harga:     parseInt(document.getElementById('input-harga').value),
+        stok:      parseInt(document.getElementById('input-stok').value) || 0,
+        tersedia:  document.getElementById('input-tersedia').checked,
+        gambar:    document.getElementById('input-gambar').value.trim(),
+        deskripsi: document.getElementById('input-deskripsi').value.trim(),
+    };
+    try {
+        const res  = await fetch(`${API_BASE}/produk.php`, {
+            method: 'POST', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Gagal menyimpan produk.');
+        document.getElementById('form-tambah-produk').reset();
+        document.getElementById('preview-gambar').classList.add('hidden');
+        await loadProduk();
+        showToast('✅ Produk berhasil ditambahkan!', 'green');
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+    } finally {
+        btnText.innerHTML = "<i class='fas fa-save mr-1'></i> Simpan ke User View";
+        spinner.classList.add('hidden');
+        btn.disabled = false;
     }
+}
 
-    // ── Init ─────────────────────────────────────────────
-    pollBadgeSaja();
-    setInterval(pollBadgeSaja, 30000);
+document.getElementById('input-gambar').addEventListener('input', function () {
+    const url = this.value.trim();
+    const preview = document.getElementById('preview-gambar');
+    const img = document.getElementById('img-preview');
+    if (url) { img.src = url; preview.classList.remove('hidden'); img.onerror = () => preview.classList.add('hidden'); }
+    else { preview.classList.add('hidden'); }
+});
+
+async function toggleTersedia(id, btnEl) {
+    const isAktif = btnEl.classList.contains('bg-green-500');
+    btnEl.classList.toggle('bg-green-500', !isAktif);
+    btnEl.classList.toggle('bg-gray-300', isAktif);
+    const span = btnEl.querySelector('span');
+    span.classList.toggle('translate-x-6', !isAktif);
+    span.classList.toggle('translate-x-1', isAktif);
+    try {
+        const res  = await fetch(`${API_BASE}/produk.php`, {
+            method: 'PATCH', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || 'Gagal');
+        const aktual = json.tersedia;
+        btnEl.classList.toggle('bg-green-500', aktual);
+        btnEl.classList.toggle('bg-gray-300', !aktual);
+        span.classList.toggle('translate-x-6', aktual);
+        span.classList.toggle('translate-x-1', !aktual);
+        showToast(aktual ? 'Produk diaktifkan ✅' : 'Produk dinonaktifkan', aktual ? 'green' : 'gray');
+    } catch (err) {
+        btnEl.classList.toggle('bg-green-500', isAktif);
+        btnEl.classList.toggle('bg-gray-300', !isAktif);
+        span.classList.toggle('translate-x-6', isAktif);
+        span.classList.toggle('translate-x-1', !isAktif);
+        showToast('Gagal update status: ' + err.message, 'red');
+    }
+}
+
+function openModalEdit(id, nama, kategori, harga, stok, tersedia, gambar, deskripsi) {
+    document.getElementById('edit-id').value         = id;
+    document.getElementById('edit-nama').value       = nama;
+    document.getElementById('edit-kategori').value   = kategori;
+    document.getElementById('edit-harga').value      = harga;
+    document.getElementById('edit-stok').value       = stok;
+    document.getElementById('edit-tersedia').checked = tersedia == 1;
+    document.getElementById('edit-gambar').value     = gambar;
+    document.getElementById('edit-deskripsi').value  = deskripsi ?? '';
+    document.getElementById('edit-error').classList.add('hidden');
+    document.getElementById('modal-edit').classList.remove('hidden');
+    document.getElementById('modal-edit').classList.add('flex');
+}
+
+function closeModalEdit() {
+    document.getElementById('modal-edit').classList.add('hidden');
+    document.getElementById('modal-edit').classList.remove('flex');
+}
+
+document.getElementById('modal-edit').addEventListener('click', function(e) {
+    if (e.target === this) closeModalEdit();
+});
+
+async function submitEditProduk(e) {
+    e.preventDefault();
+    const btnText  = document.getElementById('btn-edit-text');
+    const spinner  = document.getElementById('btn-edit-spinner');
+    const btn      = document.getElementById('btn-edit-submit');
+    const errorBox = document.getElementById('edit-error');
+    btnText.textContent = 'Menyimpan...';
+    spinner.classList.remove('hidden');
+    btn.disabled = true;
+    errorBox.classList.add('hidden');
+    const payload = {
+        id:        parseInt(document.getElementById('edit-id').value),
+        nama:      document.getElementById('edit-nama').value.trim(),
+        kategori:  document.getElementById('edit-kategori').value,
+        harga:     parseInt(document.getElementById('edit-harga').value),
+        stok:      parseInt(document.getElementById('edit-stok').value) || 0,
+        tersedia:  document.getElementById('edit-tersedia').checked,
+        gambar:    document.getElementById('edit-gambar').value.trim(),
+        deskripsi: document.getElementById('edit-deskripsi').value.trim(),
+    };
+    try {
+        const res  = await fetch(`${API_BASE}/produk.php`, {
+            method: 'PUT', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Gagal mengupdate produk.');
+        closeModalEdit();
+        await loadProduk();
+        showToast('✅ Produk berhasil diupdate!', 'green');
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+    } finally {
+        btnText.textContent = 'Simpan Perubahan';
+        spinner.classList.add('hidden');
+        btn.disabled = false;
+    }
+}
+
+async function hapusProduk(id, nama) {
+    if (!confirm(`Hapus produk "${nama}"?\n\nTindakan ini tidak bisa dibatalkan.`)) return;
+    try {
+        const res  = await fetch(`${API_BASE}/produk.php`, {
+            method: 'DELETE', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        const json = await res.json();
+        if (json.status === 'ok') { showToast('Produk berhasil dihapus.', 'green'); loadProduk(); }
+        else showToast(json.message || 'Gagal menghapus produk.', 'red');
+    } catch (err) {
+        showToast('Terjadi kesalahan. Coba lagi.', 'red');
+    }
+}
+
+// ══════════════════════════════════════════════════════
+//  PESANAN
+// ══════════════════════════════════════════════════════
+let pollingInterval = null;
+
+async function loadPesanan() {
+    try {
+        const res  = await fetch(`${API_BASE}/pesanan.php`, { credentials: 'include' });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || 'Gagal memuat pesanan');
+        renderPesanan(json.data);
+        updateBadge(json.data.length);
+        updateLastUpdate();
+    } catch (err) {
+        showToast('Gagal memuat pesanan: ' + err.message, 'red');
+    }
+}
+
+function renderPesanan(pesanan) {
+    const list  = document.getElementById('pesanan-list');
+    const empty = document.getElementById('pesanan-empty');
+    list.innerHTML = '';
+    if (!pesanan || pesanan.length === 0) {
+        empty.classList.remove('hidden'); empty.classList.add('flex');
+        list.classList.add('hidden');
+        return;
+    }
+    empty.classList.add('hidden'); empty.classList.remove('flex');
+    list.classList.remove('hidden');
+    pesanan.forEach(p => {
+        const itemsHTML = (p.items || []).map(item => `
+            <li class="flex justify-between text-sm py-1.5 border-b border-gray-100 last:border-0">
+                <span class="text-gray-700">${escHtml(item.nama_produk)}
+                    <span class="text-gray-400 text-xs">×${item.jumlah}</span>
+                </span>
+                <span class="font-semibold text-gray-800 text-sm">${formatRupiah(item.harga_satuan * item.jumlah)}</span>
+            </li>
+        `).join('');
+        const waHTML = p.no_whatsapp
+            ? `<a href="https://wa.me/62${p.no_whatsapp.replace(/^0/, '')}" target="_blank"
+                   class="text-xs text-green-600 hover:underline flex items-center gap-1 mt-0.5">
+                   📱 ${escHtml(p.no_whatsapp)}
+               </a>`
+            : `<span class="text-xs text-slate-400 mt-0.5 block">Tanpa WA</span>`;
+        const catatanHTML = p.catatan
+            ? `<div class="mt-3 bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2 text-xs text-yellow-800">
+                   📝 <span class="font-semibold">Catatan:</span> ${escHtml(p.catatan)}
+               </div>` : '';
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-200';
+        card.dataset.id = p.id;
+        card.innerHTML = `
+            <div class="bg-gradient-to-r from-orange-400 to-yellow-400 px-4 py-3 flex items-center justify-between">
+                <div>
+                    <span class="text-white text-[10px] font-semibold uppercase tracking-widest opacity-80">Antrian</span>
+                    <div class="text-white text-4xl font-black leading-none">${p.nomor_antrian ?? '—'}</div>
+                </div>
+                <div class="text-right">
+                    <p class="text-white font-bold text-sm">${escHtml(p.nama_pelanggan)}</p>
+                    ${waHTML}
+                    <p class="text-white text-[10px] opacity-70 mt-1">${formatWaktu(p.created_at)}</p>
+                </div>
+            </div>
+            <div class="px-4 py-3 flex-1">
+                <ul>${itemsHTML || '<li class="text-xs text-slate-400 py-1">—</li>'}</ul>
+                ${catatanHTML}
+            </div>
+            <div class="px-4 pb-4 pt-2 border-t border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wide">Total</p>
+                    <p class="text-lg font-black text-gray-800">${formatRupiah(p.total_harga)}</p>
+                </div>
+                <button onclick="selesaikanPesanan(${p.id}, this)"
+                    class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all flex items-center gap-1.5">
+                    <i class="fas fa-check"></i> Selesai Buat
+                </button>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+async function selesaikanPesanan(id, btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Proses...';
+    try {
+        const res  = await fetch(`${API_BASE}/pesanan.php`, {
+            method: 'PUT', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || 'Gagal update pesanan');
+        const card = btn.closest('[data-id]');
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+        card.style.opacity    = '0';
+        card.style.transform  = 'scale(0.95)';
+        setTimeout(() => {
+            card.remove();
+            const list = document.getElementById('pesanan-list');
+            if (list.children.length === 0) {
+                document.getElementById('pesanan-empty').classList.remove('hidden');
+                document.getElementById('pesanan-empty').classList.add('flex');
+                list.classList.add('hidden');
+            }
+            updateBadge(Math.max(0, (parseInt(document.getElementById('badge-pesanan').textContent) || 0) - 1));
+        }, 300);
+        showToast('Pesanan ditandai selesai ✅', 'green');
+    } catch (err) {
+        showToast('Gagal: ' + err.message, 'red');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check"></i> Selesai Buat';
+    }
+}
+
+function startPolling() {
+    if (pollingInterval) clearInterval(pollingInterval);
+    pollingInterval = setInterval(loadPesanan, 30000);
+}
+
+function stopPolling() {
+    if (pollingInterval) { clearInterval(pollingInterval); pollingInterval = null; }
+}
+
+function updateBadge(count) {
+    const badge = document.getElementById('badge-pesanan');
+    if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
+    else { badge.classList.add('hidden'); }
+}
+
+function updateLastUpdate() {
+    const el  = document.getElementById('pesanan-last-update');
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    el.textContent = `Update: ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}
+
+async function pollBadgeSaja() {
+    try {
+        const res  = await fetch(`${API_BASE}/pesanan.php`, { credentials: 'include' });
+        const json = await res.json();
+        if (json.status === 'ok') updateBadge(json.data.length);
+    } catch (_) {}
+}
+
+// ── Helper ────────────────────────────────────────────
+function formatRupiah(angka) {
+    return 'Rp ' + parseInt(angka).toLocaleString('id-ID');
+}
+
+function formatWaktu(str) {
+    if (!str) return '—';
+    return new Date(str).toLocaleString('id-ID', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+    });
+}
+
+function escHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Init ──────────────────────────────────────────────
+fetchStatistik();
+statistikInterval = setInterval(fetchStatistik, 60000);
+pollBadgeSaja();
+setInterval(pollBadgeSaja, 30000);
 </script>
 
 </body>
