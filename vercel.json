@@ -1,12 +1,28 @@
 {
   "rewrites": [
     {
-      "source": "/api/admin/:path*",
-      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/:path*"
+      "source": "/api/admin/login.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/login.php"
     },
     {
-      "source": "/api/:path*",
-      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/:path*"
+      "source": "/api/admin/logout.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/logout.php"
+    },
+    {
+      "source": "/api/admin/produk.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/produk.php"
+    },
+    {
+      "source": "/api/admin/pesanan.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/pesanan.php"
+    },
+    {
+      "source": "/api/produk.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/produk.php"
+    },
+    {
+      "source": "/api/pesanan.php",
+      "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/pesanan.php"
     }
   ]
 }
