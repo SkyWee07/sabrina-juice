@@ -167,7 +167,16 @@
                             <h3 class="font-bold text-slate-900 text-sm">Pendapatan 7 Hari Terakhir</h3>
                             <p class="text-xs text-slate-400 mt-0.5">Hanya pesanan berstatus selesai</p>
                         </div>
-                        <span class="text-xs bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-medium">7 Hari</span>
+                        <div class="flex gap-1 bg-slate-100 p-1 rounded-full">
+                            <button id="btn-grafik-harian" onclick="gantiModeGrafik('harian')"
+                                class="text-xs px-3 py-1 rounded-full font-medium transition-all bg-amber-500 text-white">
+                                Harian
+                            </button>
+                            <button id="btn-grafik-mingguan" onclick="gantiModeGrafik('mingguan')"
+                                class="text-xs px-3 py-1 rounded-full font-medium transition-all text-slate-500">
+                                Mingguan
+                            </button>
+                        </div>
                     </div>
                     <div class="relative h-52">
                         <canvas id="chart-grafik"></canvas>
@@ -504,14 +513,15 @@ function showToast(message, color = 'green') {
 //  FASE 4 — STATISTIK DASHBOARD
 // ══════════════════════════════════════════════════════
 let grafikChart = null;
-
+let grafikMode  = 'harian';
+    
 const medalColors = ['text-yellow-500', 'text-slate-400', 'text-amber-700'];
 const medalIcons  = ['🥇', '🥈', '🥉'];
 const kategoriLabel = { teh:'🍵 Teh', jeruk:'🍊 Jeruk', jus_buah:'🥤 Jus Buah', susu:'🥛 + Susu', spesial:'⭐ Spesial' };
 
 async function fetchStatistik() {
     try {
-        const res  = await fetch(`${API_BASE}/statistik.php`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/statistik.php?grafik=${grafikMode}`, { credentials: 'include' });
         const json = await res.json();
         if (json.status !== 'ok') throw new Error(json.message || 'Gagal fetch statistik');
 
@@ -536,7 +546,8 @@ async function fetchStatistik() {
 
         // ── Grafik ──
         renderGrafik(d.grafik_7hari);
-
+        document.querySelector('#dashboard-view .lg\\:col-span-2 h3').textContent =
+            grafikMode === 'harian' ? 'Pendapatan 7 Hari Terakhir' : 'Pendapatan 4 Minggu Terakhir';
         // ── Last update ──
         const now = new Date();
         document.getElementById('dashboard-last-update').textContent =
@@ -999,6 +1010,29 @@ fetchStatistik();
 statistikInterval = setInterval(fetchStatistik, 60000);
 pollBadgeSaja();
 setInterval(pollBadgeSaja, 30000);
+
+function gantiModeGrafik(mode) {
+    grafikMode = mode;
+
+    // Update tampilan tombol
+    const btnHarian   = document.getElementById('btn-grafik-harian');
+    const btnMingguan = document.getElementById('btn-grafik-mingguan');
+
+    if (mode === 'harian') {
+        btnHarian.classList.add('bg-amber-500', 'text-white');
+        btnHarian.classList.remove('text-slate-500');
+        btnMingguan.classList.remove('bg-amber-500', 'text-white');
+        btnMingguan.classList.add('text-slate-500');
+    } else {
+        btnMingguan.classList.add('bg-amber-500', 'text-white');
+        btnMingguan.classList.remove('text-slate-500');
+        btnHarian.classList.remove('bg-amber-500', 'text-white');
+        btnHarian.classList.add('text-slate-500');
+    }
+
+    // Fetch ulang dengan mode baru
+    fetchStatistik();
+}
 </script>
 
 </body>
