@@ -336,7 +336,9 @@
                         <td class="py-3 px-3 text-center">
                             <button onclick="openModalEdit(${p.id},'${p.nama.replace(/'/g,"\\'")}','${p.kategori}',${p.harga},${p.stok},${p.tersedia},'${p.gambar??''}')"
                                 class="p-1 px-2 text-[11px] bg-slate-50 text-slate-600 rounded border mr-1"><i class="fas fa-edit"></i></button>
-                            <button class="p-1 px-2 text-[11px] bg-rose-50 text-rose-600 rounded border"><i class="fas fa-trash-can"></i></button>
+                            <button onclick="hapusProduk(${p.id}, '${p.nama.replace(/'/g, \"\\\\'\")}')">
+                                <i class="fas fa-trash-can"></i>
+                            </button>
                         </td>
                     </tr>`;
             });
@@ -472,7 +474,32 @@
             spinner.classList.add('hidden');
             btn.disabled = false;
         }
-}
+    }    
+    async function hapusProduk(id, nama) {
+        // Konfirmasi sebelum hapus
+        if (!confirm(`Hapus produk "${nama}"?\n\nTindakan ini tidak bisa dibatalkan.`)) return;
+        
+        try {
+            const res = await fetch('/api/admin/produk.php', {
+              method: 'DELETE',
+              credentials: 'include',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id })
+            });
+        
+            const json = await res.json();
+        
+            if (json.status === 'ok') {
+              showToast('Produk berhasil dihapus.', 'green');
+              loadProduk(); // refresh tabel
+            } else {
+              showToast(json.message || 'Gagal menghapus produk.', 'red');
+            }
+          } catch (err) {
+            console.error(err);
+            showToast('Terjadi kesalahan. Coba lagi.', 'red');
+          }
+        }
 </script>
     
 <div id="modal-edit" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
