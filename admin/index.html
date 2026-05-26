@@ -310,58 +310,19 @@
             <header class="border-b border-slate-200 pb-5 mb-6 flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Gudang & Inventaris Bahan Baku</h2>
-                    <p class="text-sm text-slate-500">Pantau ketersediaan kiloan buah, persediaan sirup, gula, dan cup gelas.</p>
+                    <p class="text-sm text-slate-500">Pantau ketersediaan buah, gula, dan susu kaleng.</p>
                 </div>
-                <button class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl flex items-center gap-2">
-                    <i class="fas fa-plus"></i> Tambah Kulakan (Restock)
+                <button onclick="openModalTambahBahan()"
+                    class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Tambah Bahan Baku
                 </button>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-bold text-slate-900 text-sm">Alpukat Mentega</span>
-                            <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
-                        </div>
-                        <div class="text-3xl font-black text-slate-900 my-2">14.5 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-emerald-500 h-full" style="width:72%"></div></div>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <span>Estimasi ~48 Cup</span>
-                        <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
-                    </div>
-                </div>
-                <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-bold text-slate-900 text-sm">Mangga Arumanis</span>
-                            <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Aman</span>
-                        </div>
-                        <div class="text-3xl font-black text-slate-900 my-2">22.0 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-emerald-500 h-full" style="width:88%"></div></div>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <span>Estimasi ~80 Cup</span>
-                        <button class="text-amber-600 font-semibold hover:underline">Ubah Manual</button>
-                    </div>
-                </div>
-                <div class="p-5 border border-rose-200 bg-rose-50/20 rounded-2xl shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-bold text-slate-900 text-sm">Stroberi Fresh</span>
-                            <span class="text-[10px] font-semibold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">Kritis</span>
-                        </div>
-                        <div class="text-3xl font-black text-rose-600 my-2">1.2 <span class="text-sm font-normal text-slate-400">Kg</span></div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-rose-500 h-full" style="width:12%"></div></div>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-rose-200 flex items-center justify-between text-xs">
-                        <span class="text-rose-600 font-medium">Hanya untuk ~4 Cup</span>
-                        <button class="text-amber-600 font-bold hover:underline"><i class="fas fa-shopping-basket"></i> Belanja</button>
-                    </div>
+            <div id="bahan-list" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="col-span-3 text-center py-20 text-slate-400">
+                    <i class="fas fa-spinner fa-spin mr-2"></i> Memuat data...
                 </div>
             </div>
         </div>
-
         <!-- PESANAN -->
         <div id="pesanan-view" class="tab-content">
             <header class="border-b border-slate-200 pb-5 mb-6">
@@ -458,6 +419,136 @@
   </div>
 </div>
 
+<!-- MODAL TAMBAH BAHAN BAKU -->
+<div id="modal-tambah-bahan" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+    <div class="bg-slate-900 px-6 py-4 flex items-center justify-between">
+      <h3 class="text-white font-bold text-lg">➕ Tambah Bahan Baku</h3>
+      <button onclick="closeModalTambahBahan()" class="text-white hover:text-slate-300 text-2xl leading-none">&times;</button>
+    </div>
+    <form id="form-tambah-bahan" onsubmit="submitTambahBahan(event)" class="px-6 py-5 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Bahan *</label>
+        <input type="text" id="bahan-nama" placeholder="Contoh: Jeruk, Alpukat, Gula Pasir" required
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori *</label>
+        <select id="bahan-kategori" required
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+          <option value="">-- Pilih --</option>
+          <option value="buah">🍎 Buah (satuan: biji)</option>
+          <option value="gula">🍬 Gula (satuan: kg)</option>
+          <option value="susu">🥛 Susu Kaleng (satuan: pcs)</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Stok Saat Ini *</label>
+          <input type="number" id="bahan-stok" placeholder="0" min="0" step="0.01" required
+            class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Stok Minimum *</label>
+          <input type="number" id="bahan-minimum" placeholder="5" min="0" step="0.01" required
+            class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+        </div>
+      </div>
+      <div id="tambah-bahan-error" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2"></div>
+      <div class="flex gap-3 pt-1">
+        <button type="button" onclick="closeModalTambahBahan()"
+          class="flex-1 border border-slate-300 text-slate-700 font-semibold text-sm py-2 rounded-xl hover:bg-slate-100 transition">Batal</button>
+        <button type="submit"
+          class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-2 rounded-xl transition">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL EDIT BAHAN BAKU -->
+<div id="modal-edit-bahan" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+    <div class="bg-amber-500 px-6 py-4 flex items-center justify-between">
+      <h3 class="text-white font-bold text-lg">✏️ Edit Bahan Baku</h3>
+      <button onclick="closeModalEditBahan()" class="text-white hover:text-amber-200 text-2xl leading-none">&times;</button>
+    </div>
+    <form id="form-edit-bahan" onsubmit="submitEditBahan(event)" class="px-6 py-5 space-y-4">
+      <input type="hidden" id="edit-bahan-id">
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Bahan *</label>
+        <input type="text" id="edit-bahan-nama" required
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori *</label>
+        <select id="edit-bahan-kategori" required
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+          <option value="buah">🍎 Buah (satuan: biji)</option>
+          <option value="gula">🍬 Gula (satuan: kg)</option>
+          <option value="susu">🥛 Susu Kaleng (satuan: pcs)</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Stok Saat Ini *</label>
+          <input type="number" id="edit-bahan-stok" min="0" step="0.01" required
+            class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Stok Minimum *</label>
+          <input type="number" id="edit-bahan-minimum" min="0" step="0.01" required
+            class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+        </div>
+      </div>
+      <div id="edit-bahan-error" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2"></div>
+      <div class="flex gap-3 pt-1">
+        <button type="button" onclick="closeModalEditBahan()"
+          class="flex-1 border border-slate-300 text-slate-700 font-semibold text-sm py-2 rounded-xl hover:bg-slate-100 transition">Batal</button>
+        <button type="submit"
+          class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm py-2 rounded-xl transition">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL RESTOCK -->
+<div id="modal-restock" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+    <div class="bg-emerald-500 px-6 py-4 flex items-center justify-between">
+      <h3 class="text-white font-bold text-lg">📦 Restock Bahan</h3>
+      <button onclick="closeModalRestock()" class="text-white hover:text-emerald-200 text-2xl leading-none">&times;</button>
+    </div>
+    <div class="px-6 py-5 space-y-4">
+      <input type="hidden" id="restock-id">
+      <p class="text-sm text-slate-600">Tambah stok untuk: <span id="restock-nama" class="font-bold text-slate-900"></span></p>
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Jumlah Tambah *</label>
+        <input type="number" id="restock-jumlah" placeholder="0" min="0.01" step="0.01" required
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Catatan (opsional)</label>
+        <input type="text" id="restock-catatan" placeholder="Contoh: Beli di pasar, 20 Mei"
+          class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <!-- Riwayat restock -->
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Riwayat Restock Terakhir</p>
+        <div id="riwayat-list" class="space-y-1 max-h-40 overflow-y-auto">
+          <p class="text-xs text-slate-400">Memuat...</p>
+        </div>
+      </div>
+
+      <div class="flex gap-3 pt-1">
+        <button type="button" onclick="closeModalRestock()"
+          class="flex-1 border border-slate-300 text-slate-700 font-semibold text-sm py-2 rounded-xl hover:bg-slate-100 transition">Batal</button>
+        <button onclick="submitRestock()"
+          class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm py-2 rounded-xl transition">Tambah Stok</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 const API_BASE = '/api/admin';
 
@@ -499,7 +590,7 @@ function switchTab(viewId, clickedButton) {
         fetchStatistik();
         statistikInterval = setInterval(fetchStatistik, 60000);
     }
-    if (viewId === 'produk-view') loadProduk();
+    if (viewId === 'stok-view') loadBahan();
     if (viewId === 'pesanan-view') { loadPesanan(); startPolling(); }
     else stopPolling();
 }
@@ -1049,6 +1140,260 @@ function toggleSidebar() {
     } else {
         sidebar.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
+    }
+}
+
+// ══════════════════════════════════════════════════════
+//  FASE 5 — BAHAN BAKU
+// ══════════════════════════════════════════════════════
+const API_BAHAN = '/api/admin/bahan_baku.php';
+
+const statusConfig = {
+    aman:    { label: 'Aman',         class: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+    perlu:   { label: 'Perlu Restock', class: 'bg-yellow-50 text-yellow-700 border-yellow-200' },
+    kritis:  { label: 'Kritis',       class: 'bg-rose-100 text-rose-700 border-rose-200' },
+};
+
+const kategoriIcon = { buah: '🍎', gula: '🍬', susu: '🥛' };
+
+function getStatus(stok, minimum) {
+    if (stok <= 0) return 'kritis';
+    if (stok <= minimum) return 'kritis';
+    if (stok <= minimum * 1.5) return 'perlu';
+    return 'aman';
+}
+
+function getPct(stok, minimum) {
+    const max = minimum * 4;
+    return Math.min(100, Math.round((stok / max) * 100));
+}
+
+async function loadBahan() {
+    const list = document.getElementById('bahan-list');
+    list.innerHTML = `<div class="col-span-3 text-center py-20 text-slate-400"><i class="fas fa-spinner fa-spin mr-2"></i> Memuat data...</div>`;
+    try {
+        const res  = await fetch(API_BAHAN, { credentials: 'include' });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message);
+        renderBahan(json.data);
+    } catch (err) {
+        list.innerHTML = `<div class="col-span-3 text-center py-20 text-rose-500">${err.message}</div>`;
+    }
+}
+
+function renderBahan(data) {
+    const list = document.getElementById('bahan-list');
+    if (!data || data.length === 0) {
+        list.innerHTML = `
+            <div class="col-span-3 text-center py-20 text-slate-400">
+                <div class="text-5xl mb-3">📦</div>
+                <p class="font-semibold text-slate-600">Belum ada bahan baku</p>
+                <p class="text-sm mt-1">Klik "Tambah Bahan Baku" untuk mulai.</p>
+            </div>`;
+        return;
+    }
+
+    list.innerHTML = data.map(b => {
+        const stok    = parseFloat(b.stok_saat_ini);
+        const minimum = parseFloat(b.stok_minimum);
+        const status  = getStatus(stok, minimum);
+        const pct     = getPct(stok, minimum);
+        const cfg     = statusConfig[status];
+        const barColor = status === 'aman' ? 'bg-emerald-500' : status === 'perlu' ? 'bg-yellow-400' : 'bg-rose-500';
+        const stokColor = status === 'kritis' ? 'text-rose-600' : 'text-slate-900';
+        const icon    = kategoriIcon[b.kategori] ?? '📦';
+
+        return `
+            <div class="p-5 border border-slate-200 bg-white rounded-2xl shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-slate-900 text-sm">${icon} ${escHtml(b.nama)}</span>
+                        <span class="text-[10px] font-semibold border px-2 py-0.5 rounded-full ${cfg.class}">${cfg.label}</span>
+                    </div>
+                    <div class="${stokColor} text-3xl font-black my-2">
+                        ${stok % 1 === 0 ? stok : stok.toFixed(2)}
+                        <span class="text-sm font-normal text-slate-400">${escHtml(b.satuan)}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                        <div class="${barColor} h-full transition-all duration-500" style="width:${pct}%"></div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Minimum: ${minimum} ${escHtml(b.satuan)}</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <button onclick="openModalRestock(${b.id}, '${escHtml(b.nama)}')"
+                        class="text-emerald-600 font-semibold hover:underline flex items-center gap-1">
+                        <i class="fas fa-plus-circle"></i> Restock
+                    </button>
+                    <div class="flex gap-3">
+                        <button onclick="openModalEditBahan(${b.id},'${escHtml(b.nama)}','${b.kategori}',${stok},${minimum})"
+                            class="text-amber-600 font-semibold hover:underline">Edit</button>
+                        <button onclick="hapusBahan(${b.id}, '${escHtml(b.nama)}')"
+                            class="text-rose-500 font-semibold hover:underline">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ── Modal Tambah ──
+function openModalTambahBahan() {
+    document.getElementById('form-tambah-bahan').reset();
+    document.getElementById('tambah-bahan-error').classList.add('hidden');
+    document.getElementById('modal-tambah-bahan').classList.remove('hidden');
+    document.getElementById('modal-tambah-bahan').classList.add('flex');
+}
+function closeModalTambahBahan() {
+    document.getElementById('modal-tambah-bahan').classList.add('hidden');
+    document.getElementById('modal-tambah-bahan').classList.remove('flex');
+}
+
+async function submitTambahBahan(e) {
+    e.preventDefault();
+    const errorBox = document.getElementById('tambah-bahan-error');
+    errorBox.classList.add('hidden');
+    const payload = {
+        nama:          document.getElementById('bahan-nama').value.trim(),
+        kategori:      document.getElementById('bahan-kategori').value,
+        stok_saat_ini: parseFloat(document.getElementById('bahan-stok').value) || 0,
+        stok_minimum:  parseFloat(document.getElementById('bahan-minimum').value) || 5,
+    };
+    try {
+        const res  = await fetch(API_BAHAN, {
+            method: 'POST', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message);
+        closeModalTambahBahan();
+        await loadBahan();
+        showToast('✅ Bahan baku berhasil ditambahkan!', 'green');
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+    }
+}
+
+// ── Modal Edit ──
+function openModalEditBahan(id, nama, kategori, stok, minimum) {
+    document.getElementById('edit-bahan-id').value       = id;
+    document.getElementById('edit-bahan-nama').value     = nama;
+    document.getElementById('edit-bahan-kategori').value = kategori;
+    document.getElementById('edit-bahan-stok').value     = stok;
+    document.getElementById('edit-bahan-minimum').value  = minimum;
+    document.getElementById('edit-bahan-error').classList.add('hidden');
+    document.getElementById('modal-edit-bahan').classList.remove('hidden');
+    document.getElementById('modal-edit-bahan').classList.add('flex');
+}
+function closeModalEditBahan() {
+    document.getElementById('modal-edit-bahan').classList.add('hidden');
+    document.getElementById('modal-edit-bahan').classList.remove('flex');
+}
+
+async function submitEditBahan(e) {
+    e.preventDefault();
+    const errorBox = document.getElementById('edit-bahan-error');
+    errorBox.classList.add('hidden');
+    const payload = {
+        id:            parseInt(document.getElementById('edit-bahan-id').value),
+        nama:          document.getElementById('edit-bahan-nama').value.trim(),
+        kategori:      document.getElementById('edit-bahan-kategori').value,
+        stok_saat_ini: parseFloat(document.getElementById('edit-bahan-stok').value) || 0,
+        stok_minimum:  parseFloat(document.getElementById('edit-bahan-minimum').value) || 5,
+    };
+    try {
+        const res  = await fetch(API_BAHAN, {
+            method: 'PUT', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message);
+        closeModalEditBahan();
+        await loadBahan();
+        showToast('✅ Bahan baku berhasil diupdate!', 'green');
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+    }
+}
+
+// ── Modal Restock ──
+async function openModalRestock(id, nama) {
+    document.getElementById('restock-id').value   = id;
+    document.getElementById('restock-nama').textContent = nama;
+    document.getElementById('restock-jumlah').value    = '';
+    document.getElementById('restock-catatan').value   = '';
+    document.getElementById('modal-restock').classList.remove('hidden');
+    document.getElementById('modal-restock').classList.add('flex');
+
+    // Load riwayat
+    const riwayatEl = document.getElementById('riwayat-list');
+    riwayatEl.innerHTML = '<p class="text-xs text-slate-400">Memuat...</p>';
+    try {
+        const res  = await fetch(`${API_BAHAN}?mode=riwayat&id=${id}`, { credentials: 'include' });
+        const json = await res.json();
+        if (!json.data || json.data.length === 0) {
+            riwayatEl.innerHTML = '<p class="text-xs text-slate-400">Belum ada riwayat restock.</p>';
+            return;
+        }
+        riwayatEl.innerHTML = json.data.map(r => `
+            <div class="flex justify-between text-xs py-1 border-b border-slate-100">
+                <span class="text-slate-600">+${r.jumlah_tambah} ${r.satuan} ${r.catatan ? '· ' + escHtml(r.catatan) : ''}</span>
+                <span class="text-slate-400 shrink-0 ml-2">${formatWaktu(r.created_at)}</span>
+            </div>
+        `).join('');
+    } catch (_) {
+        riwayatEl.innerHTML = '<p class="text-xs text-rose-400">Gagal memuat riwayat.</p>';
+    }
+}
+
+function closeModalRestock() {
+    document.getElementById('modal-restock').classList.add('hidden');
+    document.getElementById('modal-restock').classList.remove('flex');
+}
+
+async function submitRestock() {
+    const id      = parseInt(document.getElementById('restock-id').value);
+    const jumlah  = parseFloat(document.getElementById('restock-jumlah').value);
+    const catatan = document.getElementById('restock-catatan').value.trim();
+
+    if (!jumlah || jumlah <= 0) {
+        showToast('Jumlah restock harus lebih dari 0.', 'red');
+        return;
+    }
+
+    try {
+        const res  = await fetch(API_BAHAN, {
+            method: 'PATCH', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, jumlah, catatan }),
+        });
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message);
+        closeModalRestock();
+        await loadBahan();
+        showToast('✅ Restock berhasil dicatat!', 'green');
+    } catch (err) {
+        showToast('Gagal restock: ' + err.message, 'red');
+    }
+}
+
+// ── Hapus ──
+async function hapusBahan(id, nama) {
+    if (!confirm(`Hapus bahan "${nama}"?\n\nRiwayat restock juga akan terhapus.`)) return;
+    try {
+        const res  = await fetch(API_BAHAN, {
+            method: 'DELETE', credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }),
+        });
+        const json = await res.json();
+        if (json.status === 'ok') { showToast('Bahan baku dihapus.', 'green'); loadBahan(); }
+        else showToast(json.message, 'red');
+    } catch (err) {
+        showToast('Terjadi kesalahan.', 'red');
     }
 }
 </script>
