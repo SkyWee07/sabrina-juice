@@ -8,5 +8,6 @@
     { "source": "/api/produk.php",         "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/produk.php" },
     { "source": "/api/pesanan.php",        "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/pesanan.php" },
     { "source": "/api/status_pesanan.php", "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/status_pesanan.php" }
+    { "source": "/api/admin/bahan_baku.php", "destination": "http://sabrina-juice.atwebpages.com/sabrina-juice/api/admin/bahan_baku.php" }
   ]
 }
