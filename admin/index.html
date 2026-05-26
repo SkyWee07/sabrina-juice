@@ -590,6 +590,7 @@ function switchTab(viewId, clickedButton) {
         fetchStatistik();
         statistikInterval = setInterval(fetchStatistik, 60000);
     }
+    if (viewId === 'produk-view') loadProduk();
     if (viewId === 'stok-view') loadBahan();
     if (viewId === 'pesanan-view') { loadPesanan(); startPolling(); }
     else stopPolling();
